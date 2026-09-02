@@ -1,0 +1,30 @@
+{{template "header" .}}
+<main>
+  <div class="kicker">project delusional · idea</div>
+  <h1>What this is.</h1>
+  <p class="lede">Three local Kaspa L1 sites. Names, agents, and fees — without faking a dollar and without an L2. This tab is the explanation. You are on <strong>KNS</strong> (http://127.0.0.1:8080).</p>
+
+  <h2>The idea</h2>
+  <p class="lede">Other chains use stables so dApp costs and price tags stay boring. Stables need capital. Kaspa covenants can lock <em>work</em>. They cannot mint USD. So we split the problem:</p>
+  <div class="grid">
+    <article class="card">
+      <h3>1 · Names</h3>
+      <p><strong>This site.</strong> A <span class="mono">.kas</span> name from the live KNS indexer. Agents get a card, MCP, and a Kaspa 402. Uniqueness is indexer FCFS, not L1 consensus.</p>
+    </article>
+    <article class="card">
+      <h3>2 · Fees that do not surprise</h3>
+      <p><a href="http://127.0.0.1:8081/idea">Gramlane :8081</a> bills sequenced jobs in <strong>grams</strong> (Work Credits). 1 credit = 1 KIP-21 gram. Not a stablecoin.</p>
+    </article>
+    <article class="card">
+      <h3>3 · A shelf that waits for a real L1 dollar</h3>
+      <p><a href="http://127.0.0.1:8082/idea">Kaspa Till :8082</a> prices goods in reserved <strong>kUSD</strong> (not live). Today you pay KAS at a merchant sign. No fake peg.</p>
+    </article>
+  </div>
+
+  <h2>What this URL does</h2>
+  <p class="lede">Resolve <span class="mono">kns.kas</span>, show owner and pay URI, build an agent card, ask for payment with HTTP 402. Connect Kasware or Kastle. Log out anytime. KaChat / Kassword / ranks are pointers — we do not encrypt, store secrets, or look up NFTs.</p>
+
+  <h2>Not true</h2>
+  <p class="lede">These URLs are <strong>not</strong> live for the whole internet. Only this PC. GitHub is public: <a href="https://github.com/STP-KAS/project-delusional">STP-KAS/project-delusional</a>. This site never DMs you. <a href="/safety">Safety</a> · <a href="/honest">Claims</a> · <a href="https://x.com/StppStp">@StppStp</a></p>
+</main>
+{{template "footer" .}}

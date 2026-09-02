@@ -21,6 +21,10 @@ func (s *Server) safetyPage(w http.ResponseWriter, r *http.Request) {
 	s.render(w, "safety.html", page{Title: "Safety · KNS", Active: "safety"})
 }
 
+func (s *Server) ideaPage(w http.ResponseWriter, r *http.Request) {
+	s.render(w, "idea.html", page{Title: "Idea · KNS", Active: "idea"})
+}
+
 func (s *Server) feedbackPage(w http.ResponseWriter, r *http.Request) {
 	p := page{Title: "Feedback · KNS", Active: "feedback"}
 	if r.Method == http.MethodPost {
