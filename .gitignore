@@ -1,0 +1,7 @@
+kns.exe
+*.exe
+*.exe~
+data/*.json
+.DS_Store
+thumbs.db
+

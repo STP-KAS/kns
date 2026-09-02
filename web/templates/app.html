@@ -1,0 +1,37 @@
+{{template "header" .}}
+<main>
+  <div class="kicker">Resolver</div>
+  <h1>Name or address</h1>
+  <p class="lede">Live KNS indexer only. No demo records mixed in. Paste <span class="mono">kns.kas</span> or a <span class="mono">kaspa:</span> address.</p>
+  <form class="search" action="/app" method="get">
+    <input id="q" name="q" value="{{.Query}}" placeholder="kns.kas or kaspa:q…" autocomplete="off" />
+    <button class="btn mint" type="submit">Resolve</button>
+  </form>
+  <div id="suggest" class="suggest" hidden></div>
+  {{if .Error}}<p class="bad">{{.Error}}</p>{{end}}
+  {{if .Primary}}{{if .Primary.Domain}}
+    <p class="pill">Primary for this address: <a href="/name/{{.Primary.Domain.FullName}}">{{.Primary.Domain.FullName}}</a></p>
+  {{end}}{{end}}
+  {{if .Result}}
+    <div class="card">
+      <span class="chip {{.Result.Evidence}}">{{.Result.Evidence}}</span>
+      <h2>{{.Result.Name}}</h2>
+      {{if .Result.Warning}}<p class="warn">{{.Result.Warning}}</p>{{end}}
+      {{if .Result.Subname}}
+        <p class="avail warn">Subname — not an inscription. Parent {{.Result.Parent}}.</p>
+      {{else if .Result.Available}}
+        <p class="avail ok">Available on the indexer · {{.Result.PriceKAS}} KAS to inscribe</p>
+        <a class="btn mint" href="/register?q={{.Result.Name}}">Inscribe plan</a>
+      {{else}}
+        <p class="avail">Taken · {{.Result.Layer}}{{if .Result.Primary}} · primary{{end}}</p>
+        <p class="mono">{{.Result.Owner}}</p>
+        <div class="row">
+          <a class="btn mint" href="/name/{{.Result.Name}}">Profile</a>
+          <a class="btn ghost" href="/site/{{.Result.Name}}">Generated site</a>
+          {{if .Result.PayURI}}<button class="btn ghost" type="button" data-copy="{{.Result.PayURI}}">Copy pay URI</button>{{end}}
+        </div>
+      {{end}}
+    </div>
+  {{end}}
+</main>
+{{template "footer" .}}

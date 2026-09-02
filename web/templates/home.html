@@ -1,0 +1,29 @@
+{{template "header" .}}
+<main>
+  <section class="hero">
+    <div>
+      <div class="kicker">project delusional · <a href="https://x.com/StppStp">@StppStp</a> · Web 4.0 on Kaspa</div>
+      <h1>A name an agent can pay.</h1>
+      <p class="lede">Web 4.0 is not a Kaspa fork. It is the agentic web: readable, discoverable, callable, payable. A .kas name already pays a human. This stack adds an agent card, MCP tools, and a Kaspa HTTP 402 so a machine can do the same without a browser.</p>
+      <form class="search" action="/app" method="get">
+        <input id="q" name="q" placeholder="name or kaspa:address" autocomplete="off" autofocus />
+        <span class="tld">.kas</span>
+        <button class="btn mint" type="submit">Resolve</button>
+      </form>
+      <div id="suggest" class="suggest" hidden></div>
+      <div class="stats">
+        <div><b>Read</b><span>Web 1 · generated site</span></div>
+        <div><b>Write</b><span>Web 2 · profile</span></div>
+        <div><b>Own</b><span>Web 3 · inscription</span></div>
+        <div><b>Delegate</b><span>Web 4 · agent card</span></div>
+      </div>
+    </div>
+    <img class="art" src="/static/img/hero.jpg" alt="" />
+  </section>
+  <section class="grid">
+    <article class="card"><h3>Human</h3><p>Search, profile, pay URI, kas.limo redirect. Live indexer.</p></article>
+    <article class="card"><h3>Agent</h3><p>JSON card, MCP, 402. Synthesized from the same indexer records. No on-chain agent NFT on Kaspa.</p></article>
+    <article class="card"><h3>Honest limits</h3><p>ERC-8004 and Coinbase x402 are EVM. We copy the document shape and a Kaspa 402. Fees for sequenced dApps are grams, not a fake dollar. <a href="/web4">Web4</a> · <a href="/credits">Credits</a> · <a href="/honest">Claims</a>.</p></article>
+  </section>
+</main>
+{{template "footer" .}}

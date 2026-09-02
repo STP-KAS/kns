@@ -1,0 +1,45 @@
+pragma silverscript ^0.1.0;
+
+// Compiled with official silverc v1-rc1
+// https://github.com/kaspanet/silverscript/releases/tag/v1-rc1
+// Ori Newman @OriNewman 30 Aug 2026. RC, not yet "v1 mainnet" unless the week elapsed cleanly.
+//
+// Uniqueness of the *label* is still not consensus. This UTXO carries owner +
+// labelHash + records. A registrar must mint it. See PROTOCOL.md.
+
+contract KasName(pubkey initOwner, byte[32] initLabelHash) {
+    pubkey owner = initOwner;
+    byte[32] labelHash = initLabelHash;
+    byte[32] kasPkh = byte[32](0x0000000000000000000000000000000000000000000000000000000000000000);
+    byte[32] vaultCommit = byte[32](0x0000000000000000000000000000000000000000000000000000000000000000);
+
+    entry setKas(sig s, byte[32] pkh) {
+        require(checkSig(s, owner));
+        validateOutputState(0, State {
+            owner: owner,
+            labelHash: labelHash,
+            kasPkh: pkh,
+            vaultCommit: vaultCommit
+        });
+    }
+
+    entry bindVault(sig s, byte[32] commit) {
+        require(checkSig(s, owner));
+        validateOutputState(0, State {
+            owner: owner,
+            labelHash: labelHash,
+            kasPkh: kasPkh,
+            vaultCommit: commit
+        });
+    }
+
+    entry transfer(sig s, pubkey nextOwner) {
+        require(checkSig(s, owner));
+        validateOutputState(0, State {
+            owner: nextOwner,
+            labelHash: labelHash,
+            kasPkh: kasPkh,
+            vaultCommit: vaultCommit
+        });
+    }
+}

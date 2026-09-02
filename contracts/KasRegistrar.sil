@@ -1,0 +1,67 @@
+// KasRegistrar.sil — the only L1 path to GLOBAL .kas uniqueness.
+//
+// KIP-20 covenant_id is BLAKE2b(outpoint || authorized outputs), not hash(label).
+// A script cannot scan the UTXO set. Therefore:
+//   - anyone can genesis a covenant whose state says "alice.kas"
+//   - nodes will accept both
+//   - the ONLY consensus uniqueness for the whole TLD is: one registrar UTXO
+//     that is allowed to spawn Name children.
+//
+// This file is a spec. It is not deployed. Do not cite it as live.
+//
+// Parallelism: register() is serialized on this UTXO (10 BPS helps).
+// Each issued Name is its own UTXO and updates in parallel.
+// Subnames should NOT go through this registrar — parents issue children.
+
+pragma silverscript ^0.1.0;
+
+// SKETCH — uniqueness design notes, not a silverc v1-rc1 compile.
+// Real compiled name UTXO: contracts/v1/KasName.sil.
+
+contract KasRegistrar(pubkey init_admin, bytes taken_root) {
+    pubkey admin = init_admin;
+    bytes root = taken_root; // sparse commitment of taken labels; or a dense list while small
+    int registered = 0;
+
+    #[covenant.singleton(mode = transition)]
+    function register(State prev, bytes label, pubkey owner, bytes fee_spk) : (State) {
+        require(len(label) >= 1);
+        require(len(label) <= 255);
+        // require label not in prev.root  — membership proof, not a global scan
+        // require output[0] pays protocol fee
+        // require output[1] is Name { label, owner } authorized by this covenant_id
+        return({
+            admin: prev.admin,
+            root: prev.root, // updated with label
+            registered: prev.registered + 1
+        });
+    }
+}
+
+contract Name(bytes label, pubkey init_owner) {
+    bytes name = label;
+    pubkey owner = init_owner;
+    bytes kas_addr = "";
+    bytes content = "";
+    bytes vault_commit = "";
+
+    #[covenant.singleton(mode = transition)]
+    function set_kas(State prev, pubkey sig_key, bytes addr) : (State) {
+        require(sig_key == prev.owner);
+        return({
+            name: prev.name,
+            owner: prev.owner,
+            kas_addr: addr,
+            content: prev.content,
+            vault_commit: prev.vault_commit
+        });
+    }
+
+    #[covenant.singleton(mode = transition)]
+    function spawn_sub(State prev, pubkey sig_key, bytes child_label, pubkey child_owner) : (State) {
+        require(sig_key == prev.owner);
+        require(len(child_label) >= 1);
+        // require an authorized output Name { child_label + "." + prev.name, child_owner }
+        return(prev);
+    }
+}

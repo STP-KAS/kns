@@ -1,0 +1,19 @@
+{{template "header" .}}
+<main>
+  <div class="kicker">The hard problem</div>
+  <h1>Uniqueness</h1>
+  <p class="lede">KNS’s covenant-domain posts are directionally right: a name should be a UTXO. They are not a deployed uniqueness mechanism. KIP-20 ids are hashed from an outpoint. A script cannot inspect the UTXO set for “alice”. Hashing the label and calling it a covenant id is false.</p>
+  <div class="grid">
+    {{range .Routes}}
+    <article class="card">
+      <div class="kicker"><span class="chip {{.Status}}">{{.Status}}</span></div>
+      <h3>{{.Path}}</h3>
+      <p><b>Uniqueness.</b> {{.Uniqueness}}</p>
+      <p><b>Parallelism.</b> {{.Parallelism}}</p>
+      <p><b>Cost.</b> {{.Cost}}</p>
+    </article>
+    {{end}}
+  </div>
+  <p class="lede" style="margin-top:32px">The Toccata-native scale path is parent-issued subnames: <span class="mono">pay.shop.kas</span> is unique because only <span class="mono">shop.kas</span> can spawn it. Global <span class="mono">.kas</span> still needs either the indexer or one registrar UTXO (or a based-ZK set).</p>
+</main>
+{{template "footer" .}}

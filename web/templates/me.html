@@ -1,0 +1,30 @@
+{{template "header" .}}
+<main>
+  <div class="kicker">Wallet names · indexer</div>
+  <h1>What this address holds</h1>
+  <p class="lede">Connect Kasware or Kastle in the header, or paste a <span class="mono">kaspa:</span> address. Hardware (Ledger/Tangem/OneKey/ELLIPAL/SafePal) does not inject here — see <a href="/wallets">/wallets</a>. This lists inscription domains from the official indexer.</p>
+  <form class="search" action="/me" method="get">
+    <input name="address" value="{{.Query}}" placeholder="kaspa:q…" />
+    <button class="btn mint" type="submit">List</button>
+  </form>
+  {{if .Error}}<p class="bad">{{.Error}}</p>{{end}}
+  {{if .Primary}}{{if .Primary.Domain}}
+    <p>Primary: <a href="/name/{{.Primary.Domain.FullName}}">{{.Primary.Domain.FullName}}</a></p>
+  {{end}}{{end}}
+  {{if .Assets}}
+  <table>
+    <tr><th>Name</th><th>Verified</th><th>Status</th><th>Created</th></tr>
+    {{range .Assets}}
+    <tr>
+      <td><a href="/name/{{.Asset}}">{{.Asset}}</a></td>
+      <td>{{if .IsVerifiedDomain}}yes{{else}}no{{end}}</td>
+      <td>{{.Status}}</td>
+      <td>{{.CreationBlockTime}}</td>
+    </tr>
+    {{end}}
+  </table>
+  {{else if .Query}}
+    <p class="warn">No domain inscriptions returned for that owner.</p>
+  {{end}}
+</main>
+{{template "footer" .}}

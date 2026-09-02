@@ -1,0 +1,30 @@
+// NameVault.sil — vault window bound to a CovenantDomain
+// Companion to C:\Users\Remco\kaspa-data-vault (off-chain ciphertext).
+// On-chain: commitment + 5 minute claim window. File bytes never appear.
+
+pragma silverscript ^0.1.0;
+
+// SKETCH. Kassword (kassword.com) is the real PQ vault product.
+// Name binding is vaultCommit on KasName.sil.
+
+contract NameVault(bytes32 commitment, int64 sent_at, pubkey accessor, bytes bound_name) {
+    bytes32 commit = commitment;
+    int64 start = sent_at;
+    int64 window = 300;
+    pubkey who = accessor;
+    bytes name = bound_name;
+
+    #[covenant.singleton(mode = transition)]
+    function claim(State prev, sig signature) : (State) {
+        require(checkSig(signature, prev.who));
+        require(tx.time >= prev.start);
+        require(tx.time < prev.start + prev.window);
+        return(prev);
+    }
+
+    #[covenant.singleton(mode = transition)]
+    function expire(State prev) : (State) {
+        require(tx.time >= prev.start + prev.window);
+        return(prev);
+    }
+}

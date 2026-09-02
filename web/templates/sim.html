@@ -1,0 +1,38 @@
+{{template "header" .}}
+<main>
+  <div class="kicker">Local · era 3/4 socket · not L1</div>
+  <h1>Name set simulator</h1>
+  <p class="lede">This is an in-process map with a toy state root. It is how a based-ZK name set <em>would</em> feel: register, spawn subnames, bind a vault commit, transfer. It is not a RISC Zero proof and not a KIP-21 lane. Root <span class="mono">{{.Root}}</span></p>
+  <div class="split">
+    <div class="card">
+      <h3>Register apex</h3>
+      <form id="simReg">
+        <p><input name="name" placeholder="shop.kas" /> <input name="owner" placeholder="kaspa:owner" /></p>
+        <button class="btn mint" type="submit">register</button>
+      </form>
+      <h3 style="margin-top:20px">Spawn subname</h3>
+      <form id="simSpawn">
+        <p><input name="name" placeholder="shop.kas" /> <input name="actor" placeholder="parent owner" /></p>
+        <p><input name="child" placeholder="pay" /> <input name="childOwner" placeholder="child owner" /></p>
+        <button class="btn ghost" type="submit">spawn</button>
+      </form>
+      <h3 style="margin-top:20px">Bind vault commit</h3>
+      <form id="simVault">
+        <p><input name="name" placeholder="shop.kas" /> <input name="actor" placeholder="owner" /> <input name="commit" placeholder="32-byte hex" /></p>
+        <button class="btn ghost" type="submit">bind_vault</button>
+      </form>
+      <p id="simErr" class="bad"></p>
+    </div>
+    <div>
+      <div class="card">
+        <h3>Local names</h3>
+        {{range .Sim}}
+          <p><b>{{.Name}}</b> gen {{.Generation}}<br /><span class="mono">{{.Owner}}</span>{{if .Records.VaultCommit}}<br />vault {{.Records.VaultCommit}}{{end}}</p>
+        {{else}}
+          <p class="tiny">Empty. Register shop.kas then spawn pay.</p>
+        {{end}}
+      </div>
+    </div>
+  </div>
+</main>
+{{template "footer" .}}

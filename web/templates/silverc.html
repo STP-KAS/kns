@@ -1,0 +1,31 @@
+{{template "header" .}}
+<main>
+  <div class="kicker">Silverscript v1-rc1 · @OriNewman · kaspanet</div>
+  <h1>Real compiler, real artifacts.</h1>
+  <p class="lede">Ori Newman published <a href="https://github.com/kaspanet/silverscript/releases/tag/v1-rc1">v1-rc1</a> on 30 Aug 2026. Official GitHub Actions zip, SHA256 verified. RC is not the same as “v1 mainnet”; he said that ships a week later if no substantial bugs. Source clone: <span class="mono">C:\Users\Remco\silverscript</span> at <span class="mono">c7d17a1</span>. Compiler: <span class="mono">C:\Users\Remco\tools\silverc\silverc.exe</span>.</p>
+  <div class="grid">
+    <article class="card">
+      <h3>KasName.sil</h3>
+      <p>Stateful name UTXO: owner, labelHash, kasPkh, vaultCommit. Entries setKas / bindVault / transfer. Compiled with silverc.</p>
+      <p class="mono">template_hash e7f981d9681176d8579bd3ff2d5fe0eef653e656d043ec464acf48658132b79f</p>
+      <a class="btn ghost" href="/api/v1/artifact/KasName">artifact JSON</a>
+    </article>
+    <article class="card">
+      <h3>KaChatPayTimeout.sil</h3>
+      <p>Recipient claims now; sender reclaims after timeout. Same pattern as the official TransferWithTimeout tutorial. For chat payments, not for encrypting messages.</p>
+      <a class="btn ghost" href="/api/v1/artifact/KaChatPayTimeout">artifact JSON</a>
+    </article>
+    <article class="card">
+      <h3>WorkCredit.sil</h3>
+      <p>Prepaid grams, not a dollar. State issuer / holder / credits / lane. Entries consume (both sigs), transfer, mint. 1 credit = 1 KIP-21 gram.</p>
+      <p class="mono">template_hash c61458da2134faad500c05cc35fb5dfd2db7e44538782703207f14926a11521e</p>
+      <a class="btn ghost" href="/api/v1/artifact/WorkCredit">artifact JSON</a>
+    </article>
+    <article class="card">
+      <h3>Still not uniqueness</h3>
+      <p>Compiling a Name covenant does not make alice unique. KIP-20 ids come from outpoints. A registrar still has to mint. Compiling WorkCredit does not mint USD.</p>
+    </article>
+  </div>
+  <p class="tiny">Did not install random binaries. Only github.com/kaspanet/silverscript v1-rc1 windows-x86_64 zip, hash fbf75851e8d1c97e1982e72cb26e8b8f6417fa5a6ed99d58693d6314890619c3.</p>
+</main>
+{{template "footer" .}}

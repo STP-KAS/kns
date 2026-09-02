@@ -1,0 +1,59 @@
+{{template "header" .}}
+<main>
+  {{if .Error}}<p class="bad">{{.Error}}</p>{{end}}
+  {{if .Result}}
+  <div class="namehead">
+    {{if .Result.Records.Avatar}}<img class="avatar" src="{{.Result.Records.Avatar}}" alt="" />{{end}}
+    <div>
+      <div class="kicker"><span class="chip {{.Result.Evidence}}">{{.Result.Evidence}}</span> {{.Result.Layer}}{{if .Result.Club}} · {{.Result.Club}} club{{end}}</div>
+      <h1>{{.Result.Name}}</h1>
+      {{if .Result.Warning}}<p class="warn">{{.Result.Warning}}</p>{{end}}
+      {{if .Result.Available}}
+        <p class="avail ok">Available to inscribe for {{.Result.PriceKAS}} KAS</p>
+        <a class="btn mint" href="/register?q={{.Result.Name}}">Inscribe plan</a>
+      {{else}}
+        <p class="avail">Owner from KNS indexer{{if .Result.Verified}} · verified flag{{end}}{{if .Result.Primary}} · primary{{end}}</p>
+      {{end}}
+    </div>
+  </div>
+  <div class="row" style="margin-top:24px">
+    <a class="btn mint" href="/site/{{.Result.Name}}">Open generated site</a>
+    <a class="btn ghost" href="/agent/{{.Result.Name}}.json">Agent card</a>
+    <a class="btn ghost" href="/api/v1/call/{{.Result.Name}}">402 call</a>
+    <a class="btn ghost" href="/kachat?q={{.Result.Name}}">KaChat contact</a>
+    <a class="btn ghost" href="/ranks?q={{.Result.Name}}">Rank</a>
+    {{if .Result.PayURI}}<button class="btn ghost" type="button" data-copy="{{.Result.PayURI}}">Copy pay URI</button>{{end}}
+    {{if .Result.Owner}}<button class="btn ghost" type="button" data-copy="{{.Result.Owner}}">Copy address</button>{{end}}
+    <a class="btn ghost" href="{{.Result.LimoURL}}" target="_blank" rel="noreferrer">kas.limo redirect</a>
+    {{if .Result.ExplorerURL}}<a class="btn ghost" href="{{.Result.ExplorerURL}}" target="_blank" rel="noreferrer">Reveal tx</a>{{end}}
+  </div>
+  <div class="split" style="margin-top:32px">
+    <div class="card">
+      <h3>Indexer records</h3>
+      <table>
+        <tr><th>kas / pay</th><td class="mono">{{.Result.Records.KAS}}</td></tr>
+        <tr><th>website</th><td>{{.Result.Records.Website}}</td></tr>
+        <tr><th>redirect</th><td>{{.Result.Records.Redirect}}</td></tr>
+        <tr><th>x</th><td>{{if .Result.Records.X}}<a href="{{xurl .Result.Records.X}}">@{{.Result.Records.X}}</a>{{end}}</td></tr>
+        <tr><th>github</th><td>{{.Result.Records.GitHub}}</td></tr>
+        <tr><th>telegram</th><td>{{.Result.Records.Telegram}}</td></tr>
+        <tr><th>discord</th><td>{{.Result.Records.Discord}}</td></tr>
+        <tr><th>email</th><td>{{.Result.Records.Email}}</td></tr>
+        <tr><th>bio</th><td>{{.Result.Records.Bio}}</td></tr>
+      </table>
+      <p class="tiny">Empty ipfs/kfs/vault/igra rows are omitted: those keys are not in the live KNS profile API.</p>
+    </div>
+    <div class="card">
+      <h3>What this is</h3>
+      <p>Inscription id <span class="mono">{{short .Result.AssetID}}</span></p>
+      <p>Created {{.Result.Created}}</p>
+      <p>Site kind <span class="mono">{{.Result.SiteKind}}</span></p>
+      <p>kas:// <span class="mono">{{.Result.KasURI}}</span></p>
+      <p>DID <span class="mono">{{.Result.DID}}</span></p>
+      <p>Evidence <span class="mono">{{.Result.Evidence}}</span> — if the indexer is wrong, this page is wrong. Consensus does not store the label.</p>
+      {{if .Result.Owner}}<p id="rankLive" data-name="{{.Result.Name}}">rank…</p>{{end}}
+    </div>
+  </div>
+  {{end}}
+</main>
+{{template "footer" .}}

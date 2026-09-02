@@ -1,0 +1,25 @@
+{{template "header" .}}
+<main>
+  <div class="kicker">Indexer collections</div>
+  <h1>Directory</h1>
+  <p class="lede">99 / 999 / 10k clubs from the KNS assets API. Numeric clubs are a KNS product, not consensus.</p>
+  <div class="row">
+    <a class="btn ghost" href="/directory?club=99">99</a>
+    <a class="btn ghost" href="/directory?club=999">999</a>
+    <a class="btn ghost" href="/directory?club=9999">10k</a>
+  </div>
+  {{if .Error}}<p class="bad">{{.Error}}</p>{{end}}
+  {{if .Assets}}
+  <table>
+    <tr><th>Name</th><th>Owner</th><th>Verified</th></tr>
+    {{range .Assets}}
+    <tr>
+      <td><a href="/name/{{.Asset}}">{{.Asset}}</a></td>
+      <td class="mono">{{short .Owner}}</td>
+      <td>{{if .IsVerifiedDomain}}yes{{end}}</td>
+    </tr>
+    {{end}}
+  </table>
+  {{end}}
+</main>
+{{template "footer" .}}

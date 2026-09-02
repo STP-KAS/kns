@@ -1,0 +1,30 @@
+{{template "header" .}}
+<main>
+  <div class="kicker">Protocol</div>
+  <h1>What to call</h1>
+  <pre>GET  /api/v1/resolve?q=kns.kas
+GET  /api/v1/resolve?q=kaspa:q…
+GET  /api/v1/reverse?address=
+GET  /api/v1/names?owner=
+GET  /api/v1/rank?q=kns.kas
+GET  /api/v1/credits/quote?grams=1000000
+GET  /api/v1/wallets
+GET  /api/v1/claims
+GET  /api/v1/artifact/KasName
+GET  /api/v1/artifact/WorkCredit
+POST /api/v1/batch
+POST /mcp
+GET  /agent/kns.kas.json
+GET  /api/v1/call/kns.kas          → 402
+GET  /site/kns.kas?format=json
+GET  /llms.txt
+GET  /static/ai.txt</pre>
+  <h2>Live inscription</h2>
+  <pre>{"op":"create","p":"domain","v":"example"}</pre>
+  <p>Protocol id <span class="mono">kns</span>. Fee on reveal output 0. Profile fields are extra text inscriptions.</p>
+  <h2>Compiled (silverc v1-rc1)</h2>
+  <p><span class="mono">contracts/v1/KasName.sil</span>, <span class="mono">KaChatPayTimeout.sil</span>, <span class="mono">WorkCredit.sil</span>. See <a href="/silverc">/silverc</a> and <a href="/credits">/credits</a>.</p>
+  <h2>Not live</h2>
+  <p>Global covenant uniqueness, KaChat E2E in this process, Kassword ciphertext, KASRANKS NFT lookup, tagged Silverscript v1 mainnet. <a href="/honest">Claims</a>.</p>
+</main>
+{{template "footer" .}}

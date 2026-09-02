@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Allow: /llms.txt
+Allow: /agent/
+Allow: /mcp
+Allow: /api/v1/resolve
+Allow: /api/v1/claims

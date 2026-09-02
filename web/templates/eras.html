@@ -1,0 +1,19 @@
+{{template "header" .}}
+<main>
+  <div class="kicker">Product version 4.0 — not a Kaspa hard fork</div>
+  <h1>Four eras, one name.</h1>
+  <p class="lede">Crescendo and Toccata are live. DAGKnight is KIP-2 Proposed. vProgs have no public testnet. KNS 4.0 means the stack is specified through era 4 so a later consensus change does not force a new identity model. It does not mean era 4 is on.</p>
+  <div class="grid">
+    {{range .Eras}}
+    <article class="card">
+      <div class="kicker"><span class="chip {{.Status}}">{{.Status}}</span> era {{.ID}}</div>
+      <h3>{{.Name}}</h3>
+      <p class="mono">{{.Kaspa}}</p>
+      <p>{{.What}}</p>
+      <p><b>Uniqueness.</b> {{.Uniq}}</p>
+      <p><b>Ready means.</b> {{.Ready}}</p>
+    </article>
+    {{end}}
+  </div>
+</main>
+{{template "footer" .}}

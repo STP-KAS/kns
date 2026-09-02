@@ -1,0 +1,21 @@
+{{template "header" .}}
+<main>
+  <div class="kicker">Convention, not a live name record</div>
+  <h1>Vaults</h1>
+  <p class="lede">A useful product: encrypt a file with a seed, anchor only a commitment, bind that commitment to a .kas name as a text record. File bytes never go on-chain. <strong>No live KNS name has this binding in the official profile API.</strong> Do not look up kns.kas and expect a vault.</p>
+  <div class="grid">
+    <article class="card">
+      <h3>What exists</h3>
+      <p>CLI at <span class="mono">C:\Users\Remco\kaspa-data-vault</span>: seal → send (5 min window) → open. AES-256-GCM, BIP39, optional wRPC anchor.</p>
+    </article>
+    <article class="card">
+      <h3>What would make it a name feature</h3>
+      <p>A profile/text inscription <span class="mono">vault=&lt;package id&gt;</span> and <span class="mono">vaultCommit=&lt;32 bytes&gt;</span>, plus a DataVault covenant if you want a KAS bond on the same window.</p>
+    </article>
+    <article class="card">
+      <h3>What is missing</h3>
+      <p>KNS profile keys do not include vault. Wallets do not resolve it. The Silverscript in this repo is not deployed.</p>
+    </article>
+  </div>
+</main>
+{{template "footer" .}}
