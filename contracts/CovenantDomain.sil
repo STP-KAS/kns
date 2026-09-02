@@ -1,0 +1,99 @@
+// CovenantDomain.sil — Silverscript for post-Toccata .kas names
+//
+// Toccata is live (DAA 474_165_565, rusty-kaspa v2.0.1).
+// The name is a singleton UTXO. Consensus rejects a spend that does not
+// recreate a valid successor with the same covenant ID.
+//
+// NOT deployed. NOT how KIP-20 ids work (those are outpoint hashes).
+// Global uniqueness needs KasRegistrar.sil, not a per-name hash.
+//
+// Inscription-era names (KNS commit-reveal, protocol id "kns") stay valid.
+// Elevation: the inscription owner is the only pubkey that may call genesis.
+
+pragma silverscript ^0.1.0;
+
+// SKETCH — does not compile on silverc v1-rc1.
+// Real Name UTXO: contracts/v1/KasName.sil (compiled).
+
+contract CovenantDomain(bytes name, pubkey init_owner) {
+    bytes label = name;
+    pubkey owner = init_owner;
+    bytes kas_addr = "";
+    bytes igra_addr = "";
+    bytes content_proto = ""; // "ipfs" | "arweave" | "kfs" | "https"
+    bytes content_hash = "";
+    bytes vault_id = "";
+    bytes vault_commit = "";
+    int subnames_open = 0;
+    int generation = 0;
+
+    #[covenant.singleton(mode = transition)]
+    function set_kas(State prev, pubkey sig_key, bytes addr) : (State) {
+        require(sig_key == prev.owner);
+        require(len(addr) > 0);
+        return({
+            label: prev.label,
+            owner: prev.owner,
+            kas_addr: addr,
+            igra_addr: prev.igra_addr,
+            content_proto: prev.content_proto,
+            content_hash: prev.content_hash,
+            vault_id: prev.vault_id,
+            vault_commit: prev.vault_commit,
+            subnames_open: prev.subnames_open,
+            generation: prev.generation + 1
+        });
+    }
+
+    #[covenant.singleton(mode = transition)]
+    function set_content(State prev, pubkey sig_key, bytes proto, bytes hash) : (State) {
+        require(sig_key == prev.owner);
+        return({
+            label: prev.label,
+            owner: prev.owner,
+            kas_addr: prev.kas_addr,
+            igra_addr: prev.igra_addr,
+            content_proto: proto,
+            content_hash: hash,
+            vault_id: prev.vault_id,
+            vault_commit: prev.vault_commit,
+            subnames_open: prev.subnames_open,
+            generation: prev.generation + 1
+        });
+    }
+
+    #[covenant.singleton(mode = transition)]
+    function bind_vault(State prev, pubkey sig_key, bytes vid, bytes commit) : (State) {
+        require(sig_key == prev.owner);
+        require(len(commit) == 32);
+        return({
+            label: prev.label,
+            owner: prev.owner,
+            kas_addr: prev.kas_addr,
+            igra_addr: prev.igra_addr,
+            content_proto: prev.content_proto,
+            content_hash: prev.content_hash,
+            vault_id: vid,
+            vault_commit: commit,
+            subnames_open: prev.subnames_open,
+            generation: prev.generation + 1
+        });
+    }
+
+    #[covenant.singleton(mode = transition)]
+    function transfer(State prev, pubkey sig_key, pubkey next_owner) : (State) {
+        require(sig_key == prev.owner);
+        return({
+            label: prev.label,
+            owner: next_owner,
+            kas_addr: prev.kas_addr,
+            igra_addr: prev.igra_addr,
+            content_proto: prev.content_proto,
+            content_hash: prev.content_hash,
+            vault_id: prev.vault_id,
+            vault_commit: prev.vault_commit,
+            subnames_open: prev.subnames_open,
+            generation: prev.generation + 1
+        });
+    }
+}

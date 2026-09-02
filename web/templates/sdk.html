@@ -1,0 +1,17 @@
+{{template "header" .}}
+<main>
+  <div class="kicker">Integrators</div>
+  <h1>Drop-in resolve</h1>
+  <p class="lede">Wallets should hit the official KNS indexer. This SDK is a thin client of <span class="mono">this</span> app, which already proxies that indexer and adds pay URI / DID conventions.</p>
+  <pre>import { resolve } from "/static/js/kns.js";
+const r = await resolve("kns.kas");
+// r.owner, r.payUri, r.kasUri, r.did, r.evidence</pre>
+  <pre>GET /api/v1/resolve?q=kns.kas
+GET /api/v1/resolve?q=kaspa:q…
+GET /api/v1/names?owner=kaspa:q…
+POST /api/v1/batch  {"names":["kns.kas","nacho.kas"]}
+GET /.well-known/kaspa-name.json?name=kns.kas
+GET /api/openapi.json</pre>
+  <p>Web 4.0: <span class="mono">GET /agent/kns.kas.json</span> · <span class="mono">POST /mcp</span> · <span class="mono">GET /api/v1/call/kns.kas</span> (402). Conventions: <span class="mono">kas://kns.kas</span> · <span class="mono">did:kas:kns.kas</span>.</p>
+</main>
+{{template "footer" .}}

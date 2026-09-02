@@ -1,0 +1,25 @@
+{{template "header" .}}
+<main>
+  <div class="kicker">Sites</div>
+  <h1>Two different products</h1>
+  <div class="grid">
+    <article class="card">
+      <h3>Generated site (this app)</h3>
+      <p>Every taken name gets a page built from indexer profile fields. That is a website in the link-in-bio sense. It is live because the indexer is live.</p>
+    </article>
+    <article class="card">
+      <h3>kas.limo redirect</h3>
+      <p>KNS stores redirectUrl and a gateway 302s. kns.kas.limo → app.knsdomains.org. Not content on Kaspa.</p>
+    </article>
+    <article class="card">
+      <h3>ipfs / kfs</h3>
+      <p>ENS-class hosting. Almost no KNS profiles set ipfs://. Kaspa File Storage exists as a format; it is not wired through KNS records.</p>
+    </article>
+  </div>
+  <form class="search" action="/site/" method="get" id="gwForm">
+    <input id="gwName" placeholder="kns" />
+    <span class="tld">.kas</span>
+    <button class="btn mint" type="submit">Open generated site</button>
+  </form>
+</main>
+{{template "footer" .}}

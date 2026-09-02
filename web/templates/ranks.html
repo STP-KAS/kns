@@ -1,0 +1,20 @@
+{{template "header" .}}
+<main>
+  <div class="kicker">KasRanks idea · live balance, not the NFT</div>
+  <h1>The bag ranks the name.</h1>
+  <p class="lede"><a href="https://kasranks.com/">kasranks.com</a> / @Kas_Ranks: 782 creatures, 11 depths, rank from how much KAS you hold. This page maps a resolved name’s <em>current</em> address balance from api.kaspa.org. It does not look up KASRANKS token IDs.</p>
+  <form class="search" action="/ranks" method="get">
+    <input name="q" value="{{.Query}}" placeholder="kns.kas" />
+    <button class="btn mint" type="submit">Rank</button>
+  </form>
+  {{if .Error}}<p class="bad">{{.Error}}</p>{{end}}
+  {{if .Rank}}
+  <div class="card">
+    <h2>{{.Rank.Glyph}} {{.Rank.Title}}</h2>
+    <p>Depth {{.Rank.Depth}} / 11 · {{printf "%.4f" .Rank.KAS}} KAS</p>
+    <p class="tiny">{{.Rank.Note}}</p>
+    {{if .Result}}<p><a href="/name/{{.Result.Name}}">{{.Result.Name}}</a></p>{{end}}
+  </div>
+  {{end}}
+</main>
+{{template "footer" .}}

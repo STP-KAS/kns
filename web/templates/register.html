@@ -1,0 +1,34 @@
+{{template "header" .}}
+<main>
+  <div class="kicker">Inscribe · official protocol</div>
+  <h1>Register is still KNS commit-reveal.</h1>
+  <p class="lede">This page prices a name and builds the JSON envelope. It does not broadcast. Use <a href="https://app.knsdomains.org">app.knsdomains.org</a> or Kasware. Output 0 of the reveal pays the KNS fee address. Uniqueness is the indexer.</p>
+  <form class="search" action="/register" method="get">
+    <input id="q" name="q" value="{{.Query}}" placeholder="yourname" />
+    <span class="tld">.kas</span>
+    <button class="btn mint" type="submit">Price it</button>
+  </form>
+  {{if .Error}}<p class="bad">{{.Error}}</p>{{end}}
+  {{if .Result}}{{if not .Result.Available}}<p class="warn">{{.Result.Name}} is taken on the indexer.</p>{{end}}{{end}}
+  {{if .Plan}}
+  <div class="split">
+    <div class="card">
+      <h3>{{.Plan.Name}}</h3>
+      <p class="avail">{{.Plan.PriceKAS}} KAS protocol fee</p>
+      <p>Pay to <span class="mono">{{.Plan.FeeAddress}}</span></p>
+      <p>{{.Plan.Notes}}</p>
+      <div class="row">
+        <a class="btn mint" href="https://app.knsdomains.org" target="_blank" rel="noreferrer">Open official inscriber</a>
+        <button class="btn ghost" type="button" data-copy="{{.Plan.Payload}}">Copy payload</button>
+        <button class="btn ghost" id="inscribeBtn" type="button" data-payload="{{.Plan.Payload}}">Kasware buildScript</button>
+      </div>
+    </div>
+    <div class="card">
+      <h3>Envelope</h3>
+      <pre>{{.Plan.Payload}}</pre>
+      <p class="mono">{{.Plan.Envelope}}</p>
+    </div>
+  </div>
+  {{end}}
+</main>
+{{template "footer" .}}

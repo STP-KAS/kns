@@ -1,0 +1,31 @@
+{{template "header" .}}
+<main>
+  <div class="kicker">Web 4.0 · agents as users of a name</div>
+  <h1>Readable. Discoverable. Callable. Payable.</h1>
+  <p class="lede">Web 1 read. Web 2 write. Web 3 own. Web 4 <em>delegate</em>: an agent acting for a human resolves <span class="mono">alice.kas</span>, calls it, and pays it. That is the 2026 meaning (Cloudflare’s agentic internet; crypto shorthand Web3 + agent). It is not a Kaspa hard fork.</p>
+  <p class="tiny">Looked at AgenC / Tetsuo (<a href="https://agenc.ag">agenc.ag</a>, <a href="https://x.com/tetsuoai">@tetsuoai</a>): live Solana agent marketplace. Interesting as a parallel, not a Kaspa L1 rail. Not integrated. This stack stays Kaspa.</p>
+  <div class="grid">
+    <article class="card">
+      <div class="kicker">Readable</div>
+      <h3>llms.txt + JSON</h3>
+      <p><span class="mono">Accept: application/json</span> on a site returns the agent card. Humans still get HTML.</p>
+    </article>
+    <article class="card">
+      <div class="kicker">Discoverable</div>
+      <h3>Agent card</h3>
+      <p>ERC-8004 <em>file shape</em> at <span class="mono">/agent/kns.kas.json</span>. No Kaspa ERC-8004 registry exists. Discovery is this indexer + card.</p>
+    </article>
+    <article class="card">
+      <div class="kicker">Callable</div>
+      <h3>MCP + A2A</h3>
+      <p><span class="mono">POST /mcp</span> tools: resolve_kas, agent_card, pay_kas, kachat_contact, kas_rank, quote_work. A2A card at <span class="mono">/.well-known/agent-card.json?name=</span>.</p>
+    </article>
+    <article class="card">
+      <div class="kicker">Payable</div>
+      <h3>HTTP 402</h3>
+      <p><span class="mono">GET /api/v1/call/kns.kas</span> returns 402 with KAS <em>and</em> WorkCredit grams. Not Coinbase x402/USDC. Retry with <span class="mono">X-Kaspa-Payment: txid</span> (unchecked).</p>
+    </article>
+  </div>
+  <p class="lede" style="margin-top:28px">Try <a href="/agent/kns.kas.json">kns.kas agent card</a> · <a href="/mcp">MCP</a> · <a href="/api/v1/call/kns.kas">402 call</a> · <a href="/site/kns.kas?format=json">site as JSON</a>.</p>
+</main>
+{{template "footer" .}}

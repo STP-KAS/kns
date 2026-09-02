@@ -1,0 +1,62 @@
+// Package kachat is the naming/discovery layer for KaChat, not a clone of the app.
+// KaChat (kachat.org, @KaChat_) puts E2E payloads on Kaspa under ciph_msg:1:
+// and kchat:1:. Encryption needs the wallet key; this package only resolves a
+// .kas name to a contact and shows the envelope a real client would fill.
+package kachat
+
+import (
+	"encoding/base64"
+	"fmt"
+	"strings"
+)
+
+const (
+	Docs     = "https://www.kachat.org/"
+	X        = "https://x.com/KaChat_"
+	Linktree = "https://linktr.ee/KaChat_"
+	IOS      = "https://apps.apple.com/us/app/kachat/id6759102359"
+	Android  = "https://play.google.com/store/apps/details?id=com.kachat.app"
+	GitHub   = "https://github.com/vsmirn0v/KaChat"
+)
+
+type Contact struct {
+	Name    string `json:"name"`
+	Address string `json:"address"`
+	Note    string `json:"note"`
+}
+
+type Envelope struct {
+	Kind     string `json:"kind"`
+	Template string `json:"template"`
+	Fill     string `json:"fill"`
+}
+
+func ContactFrom(name, addr string) Contact {
+	return Contact{
+		Name:    name,
+		Address: addr,
+		Note:    "KaChat identity is the wallet. KNS is a label. Aliases are not proof of identity (kachat.org FAQ).",
+	}
+}
+
+func Envelopes(alias string) []Envelope {
+	if alias == "" {
+		alias = "alias"
+	}
+	b64 := base64.StdEncoding.EncodeToString([]byte("<ciphertext>"))
+	return []Envelope{
+		{Kind: "comm", Template: fmt.Sprintf("ciph_msg:1:comm:%s:%s", alias, b64), Fill: "ECDH secp256k1 + HKDF-SHA256 + ChaCha20-Poly1305 in the KaChat client. This string is a shape, not a sealed message."},
+		{Kind: "pay", Template: "ciph_msg:1:pay:{encrypted_hex}", Fill: "Optional encrypted payment memo. Amount and addresses stay visible on-chain."},
+		{Kind: "handshake", Template: "ciph_msg:1:handshake:{encrypted_bytes}", Fill: "Contact signaling. Routing aliases are derived, not trusted as identity."},
+		{Kind: "self_stash", Template: "ciph_msg:1:self_stash:{scope}:{encrypted_hex}", Fill: "Self-stored handshake data."},
+		{Kind: "group", Template: "kchat:1:gcomm / gctl", Fill: "Group chat payloads (KaChat 3+/4.0)."},
+	}
+}
+
+func DeepLink(addr string) string {
+	addr = strings.TrimSpace(addr)
+	if addr == "" {
+		return Linktree
+	}
+	return "https://www.kachat.org/?to=" + addr
+}

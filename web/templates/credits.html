@@ -1,0 +1,39 @@
+{{template "header" .}}
+<main>
+  <div class="kicker">Work Credits · not a dollar</div>
+  <h1>Invoice work, not USD.</h1>
+  <p class="lede">dApps sequenced on Kaspa need boring fees. Stables need capital. A Toccata covenant can lock <em>grams</em> of named-lane work. It cannot mint purchasing power. 1 credit = 1 KIP-21 gram. At policy 100 sompi/gram, 1&nbsp;000&nbsp;000 grams = 1 KAS. No L2. A Kaspa L1 dollar is not live — that vision is a different dApp.</p>
+  <form class="search" action="/credits" method="get">
+    <input name="grams" value="{{if .Query}}{{.Query}}{{else}}1000000{{end}}" inputmode="numeric" />
+    <span class="tld">grams</span>
+    <button class="btn mint" type="submit">Quote</button>
+  </form>
+  {{if .Error}}<p class="lede">{{.Error}}</p>{{end}}
+  {{if .Quote}}
+  <table>
+    <tr><th>Field</th><th>Value</th></tr>
+    <tr><td>credits</td><td class="mono">{{.Quote.Credits}} {{.Quote.Unit}}</td></tr>
+    <tr><td>KAS fallback</td><td class="mono">{{.Quote.KAS}} KAS ({{.Quote.Sompi}} sompi @ {{.Quote.SompiPerGram}} sompi/gram)</td></tr>
+    <tr><td>USD</td><td>{{.Quote.USD}}</td></tr>
+    <tr><td>scheme</td><td class="mono">{{.Quote.Scheme}}</td></tr>
+    <tr><td>lane</td><td class="mono">{{if .Quote.Lane}}{{.Quote.Lane}}{{else}}unset{{end}}</td></tr>
+  </table>
+  <p class="lede" style="margin-top:24px">{{.Quote.Note}}</p>
+  <p class="tiny">{{.Quote.NotAStablecoin}}</p>
+  {{end}}
+  <div class="grid">
+    <article class="card">
+      <h3>Covenant</h3>
+      <p><span class="mono">WorkCredit.sil</span> — mint / consume / transfer. Issuer is the sequencer. Holder burns grams with a co-sign. <a href="/api/v1/artifact/WorkCredit">artifact</a></p>
+    </article>
+    <article class="card">
+      <h3>Dual invoice</h3>
+      <p>JSON: <a href="/api/v1/credits/quote?grams={{if .Query}}{{.Query}}{{else}}1000000{{end}}">/api/v1/credits/quote</a>. MCP tool <span class="mono">quote_work</span>. 402 accepts KAS <em>or</em> grams.</p>
+    </article>
+    <article class="card">
+      <h3>Map</h3>
+      <p>Two L1 dApps: <a href="http://localhost:8081">Gramlane :8081</a> (grams) and <a href="http://localhost:8082">Kaspa Till :8082</a> (reserved L1 stable, no L2). <a href="/honest">/honest</a></p>
+    </article>
+  </div>
+</main>
+{{template "footer" .}}

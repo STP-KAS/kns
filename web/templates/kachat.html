@@ -1,0 +1,31 @@
+{{template "header" .}}
+<main>
+  <div class="kicker">KaChat idea · not the iOS app</div>
+  <h1>Message a .kas name.</h1>
+  <p class="lede">KaChat (@KaChat_, kachat.org) puts E2E payloads on Kaspa (<span class="mono">ciph_msg:1:</span>). Encryption happens in the wallet. This page only resolves the name to a contact. Aliases are not identity.</p>
+  <form class="search" action="/kachat" method="get">
+    <input name="q" value="{{.Query}}" placeholder="kns.kas" />
+    <button class="btn mint" type="submit">Resolve contact</button>
+  </form>
+  {{if .Error}}<p class="bad">{{.Error}}</p>{{end}}
+  {{if .Contact}}
+  <div class="card">
+    <h3>{{.Contact.Name}}</h3>
+    <p class="mono">{{.Contact.Address}}</p>
+    <p>{{.Contact.Note}}</p>
+    {{if .Result}}{{if .Result.PayURI}}<button class="btn mint" type="button" data-copy="{{.Result.PayURI}}">Copy pay URI</button>{{end}}{{end}}
+    <a class="btn ghost" href="{{.KaChatDocs}}" target="_blank" rel="noreferrer">kachat.org</a>
+    <a class="btn ghost" href="https://linktr.ee/KaChat_" target="_blank" rel="noreferrer">Get KaChat</a>
+  </div>
+  {{end}}
+  <h2 style="margin-top:32px">Envelope shapes</h2>
+  {{range .Envelopes}}
+  <div class="card" style="margin-top:12px">
+    <div class="kicker">{{.Kind}}</div>
+    <pre>{{.Template}}</pre>
+    <p>{{.Fill}}</p>
+  </div>
+  {{end}}
+  <p class="lede" style="margin-top:24px">KaChat 4.0 also ships KaPosts (likes/comments/follows tied to KNS). On-chain social is in their app. A local sketch is at <a href="/kaposts">/kaposts</a> and is labeled local.</p>
+</main>
+{{template "footer" .}}

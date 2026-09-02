@@ -1,0 +1,23 @@
+// NameSet settlement covenant — era 3/4 socket.
+// User ops ordered in KIP-21 lane "KNS1" (not allocated).
+// Off-chain SMT: name → owner. Prover shows name was empty, now occupied.
+// L1 verifies Groth16 or R0Succinct + seqcommit for that lane.
+// NOT deployed. /sim is a toy map, not this contract.
+
+pragma silverscript ^0.1.0;
+
+// SKETCH of a based-ZK settlement covenant. Not compiled.
+// /sim is an in-process map, not this contract.
+
+contract NameSet(bytes32 state_root, bytes4 lane) {
+    bytes32 root = state_root;
+    bytes4  ns   = lane; // "KNS1"
+
+    #[covenant.singleton(mode = transition)]
+    function settle(State prev, bytes proof, bytes32 next_root) : (State) {
+        // require OpZkPrecompile(proof)
+        // require seqcommit(prev.ns) covers the user ops in this batch
+        // require public inputs bind prev.root → next_root
+        return({ root: next_root, ns: prev.ns });
+    }
+}

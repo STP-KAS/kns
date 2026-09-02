@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{{if .Result}}{{.Result.Name}}{{else}}site{{end}}</title>
+  <link rel="stylesheet" href="/static/css/app.css" />
+  <style>
+    body { max-width: 720px; margin: 0 auto; padding: 48px 20px; }
+    .site-av { width: 96px; height: 96px; border-radius: 24px; object-fit: cover; border: 1px solid var(--line); }
+  </style>
+</head>
+<body>
+{{if .Result}}
+  {{if .Result.Records.Avatar}}<img class="site-av" src="{{.Result.Records.Avatar}}" alt="" />{{end}}
+  <div class="kicker">generated from KNS indexer · not IPFS</div>
+  <h1>{{.Result.Name}}</h1>
+  {{if .Result.Records.Bio}}<p class="lede">{{.Result.Records.Bio}}</p>{{end}}
+  <p class="mono">{{.Result.Owner}}</p>
+  <div class="row">
+    {{if .Result.PayURI}}<button class="btn mint" type="button" data-copy="{{.Result.PayURI}}">Pay</button>{{end}}
+    {{if .Result.Records.Redirect}}<a class="btn ghost" href="/site/{{.Result.Name}}?go=1">Follow owner redirect</a>{{end}}
+    {{if .Result.Records.X}}<a class="btn ghost" href="{{xurl .Result.Records.X}}">X</a>{{end}}
+    {{if .Result.Records.GitHub}}<a class="btn ghost" href="https://github.com/{{.Result.Records.GitHub}}">GitHub</a>{{end}}
+    {{if .Result.Records.Website}}<a class="btn ghost" href="{{.Result.Records.Website}}">Website field</a>{{end}}
+    <a class="btn ghost" href="/agent/{{.Result.Name}}.json">Agent JSON</a>
+    <a class="btn ghost" href="/name/{{.Result.Name}}">Resolver</a>
+  </div>
+  <p class="tiny">This page is built from profile inscriptions. It is a website for the name only in the same way a link-in-bio is a website. Content-addressed hosting still has to be set (ipfs / kfs) and is almost never set today.</p>
+{{else}}
+  <p>Name not found.</p>
+{{end}}
+  <script src="/static/js/app.js"></script>
+</body>
+</html>

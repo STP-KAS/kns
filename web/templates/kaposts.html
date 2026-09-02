@@ -1,0 +1,19 @@
+{{template "header" .}}
+<main>
+  <div class="kicker">Local sketch of KaPosts</div>
+  <h1>Posts tied to a name — here, only in memory.</h1>
+  <p class="lede">KaChat 4.0 KaPosts are on-chain and KNS-tied. This board is a local demo so the idea is visible. It does not hit Kaspa.</p>
+  <form id="postForm" class="card">
+    <p><input name="name" placeholder="kns.kas" /> <input name="owner" placeholder="kaspa:…" /></p>
+    <p><input name="text" placeholder="post text" style="width:100%" /></p>
+    <button class="btn mint" type="submit">Post locally</button>
+  </form>
+  {{range .Posts}}
+  <div class="card" style="margin-top:12px">
+    <div class="kicker">local · {{.Name}}</div>
+    <p>{{.Text}}</p>
+    <p class="mono">{{.Owner}}</p>
+  </div>
+  {{end}}
+</main>
+{{template "footer" .}}

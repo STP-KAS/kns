@@ -1,0 +1,18 @@
+{{template "header" .}}
+<main>
+  <div class="kicker">Claims checker</div>
+  <h1>What is true.</h1>
+  <p class="lede">Same discipline as kaspaexplained: live, indexer, roadmap, research, wrong. This app is a resolver and a design, not a deployed covenant registrar.</p>
+  <table>
+    <tr><th>Claim</th><th>Status</th><th>Meaning</th><th>Source</th></tr>
+    {{range .Claims}}
+    <tr>
+      <td>{{.Claim}}</td>
+      <td><span class="chip {{.Status}}">{{.Status}}</span></td>
+      <td>{{.Meaning}}</td>
+      <td class="tiny">{{.Source}}</td>
+    </tr>
+    {{end}}
+  </table>
+</main>
+{{template "footer" .}}

@@ -1,0 +1,23 @@
+{{template "header" .}}
+<main>
+  <div class="kicker">Kassword · Toccata vault · @Kas_Ranks</div>
+  <h1>A name can point at a vault. It cannot open it.</h1>
+  <p class="lede"><a href="https://kassword.com/">kassword.com</a> is a browser-only post-quantum vault (Argon2id, XChaCha20-Poly1305, ML-KEM-1024, ML-DSA-87) with optional encrypted DAG backup and a Toccata covenant locker. There is no Kassword server. This app does not store passwords.</p>
+  <div class="grid">
+    <article class="card">
+      <h3>What to bind on a name</h3>
+      <p>A <span class="mono">vaultCommit</span> (hash of the sealed blob) and a pointer “open Kassword, this wallet”. File bytes stay in the browser / DAG ciphertext.</p>
+    </article>
+    <article class="card">
+      <h3>What this app will not do</h3>
+      <p>No master password field. No ciphertext upload. No “recover for me”. That would be a Kassword server, which they refuse to be.</p>
+    </article>
+    <article class="card">
+      <h3>Locker branches</h3>
+      <p>Kassword 2.0: Schnorr, HLMT cold, escrow, dead-man, M-of-N — enforced by Toccata, not by us. Spec the spend rule on the name later; do not fake it here.</p>
+    </article>
+  </div>
+  <p><a class="btn mint" href="https://kassword.com/" target="_blank" rel="noreferrer">Open Kassword</a>
+  <a class="btn ghost" href="https://github.com/KASRANKS/KASSWORD" target="_blank" rel="noreferrer">Source</a></p>
+</main>
+{{template "footer" .}}

@@ -1,0 +1,44 @@
+{{define "header"}}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{{.Title}}</title>
+  <meta name="description" content="KNS for Web 4.0: .kas names that agents can read, discover, call, and pay on Kaspa." />
+  <link rel="icon" href="/static/img/icon.jpg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Syne:wght@500;600;700;800&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/static/css/app.css" />
+</head>
+<body>
+  <div class="grain"></div>
+  <header class="nav">
+    <a class="brand" href="/">
+      <img src="/static/img/icon.jpg" alt="" />
+      <span>KNS</span>
+      <span class="tiny" style="font-weight:500;letter-spacing:0"><a href="https://x.com/StppStp">@StppStp</a></span>
+    </a>
+    <nav>
+      <a href="/app" class="{{if eq .Active "app"}}on{{end}}">App</a>
+      <a href="/me" class="{{if eq .Active "me"}}on{{end}}">Me</a>
+      <a href="/directory" class="{{if eq .Active "directory"}}on{{end}}">Directory</a>
+      <a href="/web4" class="{{if eq .Active "web4"}}on{{end}}">Web4</a>
+      <a href="/kachat" class="{{if eq .Active "kachat"}}on{{end}}">KaChat</a>
+      <a href="/kassword" class="{{if eq .Active "kassword"}}on{{end}}">Kassword</a>
+      <a href="/ranks" class="{{if eq .Active "ranks"}}on{{end}}">Ranks</a>
+      <a href="/kcc" class="{{if eq .Active "kcc"}}on{{end}}">KCC</a>
+      <a href="/credits" class="{{if eq .Active "credits"}}on{{end}}">Credits</a>
+      <a href="/silverc" class="{{if eq .Active "silverc"}}on{{end}}">Silverc</a>
+      <a href="/covenant" class="{{if eq .Active "covenant"}}on{{end}}">Uniqueness</a>
+      <a href="/honest" class="{{if eq .Active "honest"}}on{{end}}">Claims</a>
+      <a href="/wallets" class="{{if eq .Active "wallets"}}on{{end}}">Wallets</a>
+      <a href="/feedback" class="{{if eq .Active "feedback"}}on{{end}}">Feedback</a>
+      <a href="/safety" class="{{if eq .Active "safety"}}on{{end}}">Safety</a>
+      <a href="/sdk" class="{{if eq .Active "sdk"}}on{{end}}">SDK</a>
+    </nav>
+    <button class="btn ghost" type="button" data-wallet-connect data-idle-label="Connect wallet">Connect wallet</button>
+    <button class="btn ghost" type="button" data-wallet-logout hidden>Log out</button>
+  </header>
+{{end}}

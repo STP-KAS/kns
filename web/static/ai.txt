@@ -1,0 +1,6 @@
+# KNS Web 4.0
+Contact: https://github.com/kaspanet/silverscript
+MCP: /mcp
+Agent-card: /agent/{name}.json
+Claims: /honest
+Note: Uniqueness is the KNS indexer. Agent cards are synthesized. Kaspa 402 does not verify settlement.
