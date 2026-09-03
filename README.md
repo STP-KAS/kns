@@ -58,6 +58,7 @@ If the browser says “refused to connect”, the `.exe` is not running. Run the
 - Agent cards are synthesized. There is no Kaspa ERC-8004 registry.
 - Work Credits are prepaid KIP-21 grams. Not a stablecoin. No L2.
 - AgenC/Tetsuo is a Solana marketplace. Not wired.
+- **No foreign `readInputState`** on v1-rc1 ([silverscript#234](https://github.com/kaspanet/silverscript/pull/234) closed unmerged). Own UTXO only. `conventions/no-foreign-state.md`.
 
 ## Trusted tools used
 
