@@ -41,7 +41,8 @@
       <a href="/safety" class="{{if eq .Active "safety"}}on{{end}}">Safety</a>
       <a href="/sdk" class="{{if eq .Active "sdk"}}on{{end}}">SDK</a>
     </nav>
-    <button class="btn ghost" type="button" data-wallet-connect data-idle-label="Connect wallet">Connect wallet</button>
+    <button class="btn ghost" type="button" data-wallet-connect data-idle-label="Log in">Log in</button>
     <button class="btn ghost" type="button" data-wallet-logout hidden>Log out</button>
+    <span class="tiny" data-wallet-status></span>
   </header>
 {{end}}
