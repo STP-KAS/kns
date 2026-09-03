@@ -1,26 +1,70 @@
 {{template "header" .}}
 <main>
   <div class="kicker">silverscript#234 · concrete · closed unmerged</div>
-  <h1>Same 42 bytes. Two amounts.</h1>
-  <p class="lede">A vault reads a token input’s <span class="mono">amount</span> at compile-time offsets. Kaspa allows more than one legal push header for the same payload. The attacker keeps <strong>length, template hash, and P2SH</strong> and still slides every field. <a href="https://github.com/kaspanet/silverscript/pull/234">PR 234</a> (supertypo, 29–30 Aug 2026) proposed pinning headers. It was <strong>closed, not merged</strong>. v1-rc1 does not include the guard.</p>
+  <h1>Same 42 bytes. Amount 1 becomes 264.</h1>
+  <p class="lede">A vault on v1-rc1 reads a token’s <span class="mono">amount</span> at compile-time offsets 1..9. Kaspa allows more than one legal push header for the same payload. The attacker keeps <strong>length, template hash, and P2SH</strong> and still slides the window. These numbers are produced by <span class="mono">go test ./internal/framing</span>, not by hand. <a href="https://github.com/kaspanet/silverscript/pull/234">PR 234</a> ({{.Framing.Author}}, {{.Framing.When}}) proposed pinning headers. It was <strong>closed, not merged</strong>.</p>
+
+  <div class="stats">
+    <div><b>1</b><span>real amount (canonical)</span></div>
+    <div><b class="bad">264</b><span>vault reads on the reframe</span></div>
+    <div><b>42</b><span>bytes both times</span></div>
+    <div><b class="warn">unmerged</b><span>v1-rc1 has no pin</span></div>
+  </div>
 
   <h2>Token state the vault thinks it is reading</h2>
   <pre>struct TokenState {
-    int amount;       // 8-byte payload
+    int amount;       // 8-byte little-endian payload
     byte[32] owner;
 }</pre>
+  <p class="tiny">Vault window: bytes [1:9] as uint64 LE. Owner: bytes [10:42]. Encoder headers: <span class="mono">08</span> at 0, <span class="mono">20</span> at 9.</p>
 
-  <h2>Canonical packing — 42 bytes</h2>
-  <pre>08  &lt;8 bytes: amount&gt;     20  &lt;32 bytes: owner&gt;
-└── 9 bytes ──────────┘   └── 33 bytes ─────────┘
-vault reads amount at bytes 1..9</pre>
+  <h2>Canonical packing — vault reads {{.Framing.Canonical.VaultAmount}}</h2>
+  <p class="tiny">{{.Framing.Canonical.Name}} · {{.Framing.Canonical.Total}} bytes · pin {{if .Framing.Canonical.PinOK}}<span class="ok">would accept</span>{{else}}<span class="bad">reject</span>{{end}}</p>
+  <div class="bytes" title="{{.Framing.Canonical.HexSpaced}}">
+    {{range .Framing.Canonical.Cells}}
+    <div class="byte {{.Class}}"><span class="i">{{.I}}</span><span>{{.Hex}}</span></div>
+    {{end}}
+  </div>
+  <pre>{{.Framing.Canonical.HexSpaced}}</pre>
 
-  <h2>Hostile packing — still 42 bytes, same template</h2>
-  <pre>4c 08  &lt;8 bytes&gt;          1f  &lt;31 bytes: owner&gt;
-└── 10 bytes ──────┘      └── 32 bytes ────────┘
-10 + 32 = 42. Hash matches. P2SH matches.
-vault still reads 1..9 and now gets: 08 + 7 attacker bytes
-real collateral = 1.  vault thinks ~2^59.</pre>
+  <h2>Hostile packing — still 42 bytes, vault reads {{.Framing.Attack.VaultAmount}}</h2>
+  <p class="tiny">{{.Framing.Attack.Name}} · pin {{if .Framing.Attack.PinOK}}<span class="ok">would accept</span>{{else}}<span class="bad">{{.Framing.Attack.PinError}}</span>{{end}}</p>
+  <div class="bytes">
+    {{range .Framing.Attack.Cells}}
+    <div class="byte {{.Class}}"><span class="i">{{.I}}</span><span>{{.Hex}}</span></div>
+    {{end}}
+  </div>
+  <pre>{{.Framing.Attack.HexSpaced}}</pre>
+  <p class="lede">Red outline is the vault’s amount window (offsets 1–8). On the reframe it starts on the <span class="mono">08</span> length byte, so 1 becomes 264 (<span class="mono">0x108</span>). Owner window starts on <span class="mono">1f</span> instead of the real owner. Template hash still matches: it hashes the <em>code</em>, not these 42 bytes.</p>
+
+  <h2>The PR’s “~2^59” case, exactly</h2>
+  <p class="lede">Byte 1 of the attack is always <span class="mono">08</span> (PUSHDATA1 length). You cannot make the slid uint64 equal 2^59 on the nose. Real amount 2<sup>51</sup> = {{.Framing.HugeCanon.RealAmount}} packs as <span class="mono">… 08 00</span>; the vault then reads 2<sup>59</sup>+8 = {{.Framing.HugeAttack.VaultAmount}}.</p>
+  <table>
+    <tr><th></th><th>Real amount</th><th>Vault reads</th><th>Pin (#234, not in v1-rc1)</th></tr>
+    <tr><td>canonical, amount=1</td><td>{{.Framing.Canonical.RealAmount}}</td><td>{{.Framing.Canonical.VaultAmount}}</td><td class="ok">accept</td></tr>
+    <tr><td>attack, amount=1</td><td>{{.Framing.Attack.RealAmount}}</td><td class="bad">{{.Framing.Attack.VaultAmount}}</td><td class="bad">reject</td></tr>
+    <tr><td>canonical, amount=2^51</td><td>{{.Framing.HugeCanon.RealAmount}}</td><td>{{.Framing.HugeCanon.VaultAmount}}</td><td class="ok">accept</td></tr>
+    <tr><td>attack, amount=2^51</td><td>{{.Framing.HugeAttack.RealAmount}}</td><td class="bad">{{.Framing.HugeAttack.VaultAmount}}</td><td class="bad">reject</td></tr>
+  </table>
+
+  <h2>Paste 42 bytes — decode as the vault</h2>
+  <p class="tiny">This is the v1-rc1 slice, running in Go. It is not silverc and it is not a chain execution.</p>
+  {{if .Error}}<p class="bad">{{.Error}}</p>{{end}}
+  <form class="search" method="get" action="/234">
+    <input name="hex" value="{{if .Query}}{{.Query}}{{else}}{{.Framing.Attack.Hex}}{{end}}" spellcheck="false" aria-label="hex" />
+    <button class="btn mint" type="submit">Decode</button>
+  </form>
+  {{if .Framing.Custom}}
+  <div class="card">
+    <h3>Pasted · {{.Framing.Custom.Total}} bytes · vault {{.Framing.Custom.VaultAmount}}</h3>
+    <p class="tiny">pin {{if .Framing.Custom.PinOK}}<span class="ok">would accept</span>{{else}}<span class="bad">{{.Framing.Custom.PinError}}</span>{{end}} · owner {{.Framing.Custom.VaultOwner}}</p>
+    <div class="bytes">
+      {{range .Framing.Custom.Cells}}
+      <div class="byte {{.Class}}"><span class="i">{{.I}}</span><span>{{.Hex}}</span></div>
+      {{end}}
+    </div>
+  </div>
+  {{end}}
 
   <h2>What this stack does</h2>
   <table>
@@ -31,6 +75,7 @@ real collateral = 1.  vault thinks ~2^59.</pre>
     <tr><td>KasInvoice.sil</td><td>no</td><td>KAS due + reserved micro in ctor</td></tr>
     <tr><td>a till that readInputState a kUSD UTXO</td><td>would be yes</td><td><strong>blocked</strong> until a merged framing pin</td></tr>
   </table>
-  <p class="lede">A test walks every <span class="mono">.sil</span> in this repo and fails if it contains <span class="mono">readInputState</span>. Recompiling with current silverc does not close the hole. JSON: <a href="/api/v1/framing">/api/v1/framing</a>. Rule: <a href="/honest">/honest</a>.</p>
+  <p class="lede">{{.Framing.OurRule}} Recompiling with current silverc does not close the hole. JSON: <a href="/api/v1/framing">/api/v1/framing</a>. Rule: <a href="/honest">/honest</a>. Illustration we refuse to compile: <span class="mono">contracts/v1/FORBIDDEN-ForeignTokenVault.sil</span>.</p>
+  <p class="tiny">Legend: mint = amount payload as the vault indexes it · purple = owner window · gold border = push header · red outline = vault amount slice · red fill = header the pin would reject.</p>
 </main>
 {{template "footer" .}}

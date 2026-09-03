@@ -9,11 +9,12 @@ import (
 
 	"kns/contracts"
 	"kns/internal/feedback"
+	"kns/internal/framing"
 	"kns/internal/kachat"
-	"kns/internal/wallets"
 	"kns/internal/kaspa"
 	"kns/internal/kasranks"
 	"kns/internal/kcc"
+	"kns/internal/wallets"
 	"kns/internal/workcredit"
 )
 
@@ -30,7 +31,19 @@ func (s *Server) whyPage(w http.ResponseWriter, r *http.Request) {
 }
 
 func (s *Server) framingPage(w http.ResponseWriter, r *http.Request) {
-	s.render(w, "framing.html", page{Title: "silverscript#234 · KNS", Active: "silverc"})
+	v := framing.Demo()
+	p := page{Title: "silverscript#234 · KNS", Active: "234", Framing: &v}
+	if hx := strings.TrimSpace(r.FormValue("hex")); hx != "" {
+		p.Query = hx
+		got, err := framing.DecodeHex(hx)
+		if err != nil {
+			p.Error = err.Error()
+		} else {
+			v.Custom = &got
+			p.Framing = &v
+		}
+	}
+	s.render(w, "framing.html", p)
 }
 
 func (s *Server) feedbackPage(w http.ResponseWriter, r *http.Request) {

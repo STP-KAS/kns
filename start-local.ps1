@@ -20,4 +20,7 @@ function Ping($url, $name) {
 Ping "http://localhost:8080/" "KNS"
 Ping "http://localhost:8081/" "Gramlane"
 Ping "http://localhost:8082/" "Kaspa Till"
+Ping "http://localhost:8080/234" "KNS #234"
+Ping "http://localhost:8081/234" "Gramlane #234"
+Ping "http://localhost:8082/234" "Till #234"
 Write-Output "If a line says DOWN, run the .exe in that folder once and look at the console error."

@@ -47,6 +47,6 @@ func Claims() []Claim {
 		{"Igra has capital-backed stables", Live, "Hyperlane warp routes on Igra: USDC, iKAS, cbBTC, wstETH. Kaskad-style apps also list USDT. That is bridged reserves, not an L1 covenant.", "@Igra_Labs 9 Apr 2026; Hyperlane"},
 		{"WorkCredit.sil is a mainnet voucher you can spend today", Local, "silverc v1-rc1 compiled the artifact. No genesis UTXO is submitted by this app. Quotes at /credits are local invoices.", "contracts/v1/WorkCredit.sil"},
 		{"This stack integrates AgenC / Tetsuo", Wrong, "AgenC is a live Solana agent marketplace (agenc.ag, @tetsuoai). Looked at; not wired. Settlement is SOL, not Kaspa L1. Telegram dump in Documents is chat export, not a runtime.", "agenc.ag; github.com/tetsuo-ai"},
-		{"Silverscript v1-rc1 foreign state reads are safe", Wrong, "readInputState offsets are compile-time. Non-minimal push encodings can slide fields while keeping template hash and length. silverscript#234 proposed a framing pin; it was closed unmerged on RC day. This repo only transitions its own UTXOs.", "https://github.com/kaspanet/silverscript/pull/234 ; conventions/no-foreign-state.md"},
+		{"Silverscript v1-rc1 foreign state reads are safe", Wrong, "readInputState offsets are compile-time. Same 42-byte TokenState: canonical vault reads 1, hostile OP_PUSHDATA1 reframe vault reads 264. Template hash still matches. silverscript#234 pin is closed unmerged. This repo only transitions its own UTXOs.", "https://github.com/kaspanet/silverscript/pull/234 ; /234 ; conventions/no-foreign-state.md"},
 	}
 }

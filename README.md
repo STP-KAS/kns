@@ -49,7 +49,7 @@ If the browser says “refused to connect”, the `.exe` is not running. Run the
 | Ocean rank from live balance | `/ranks?q=kns.kas` |
 | KCC drafts | `/kcc` |
 | Silverscript v1-rc1 artifacts | `/silverc` |
-| #234 framing attack (42 bytes, two amounts) | `/234` |
+| #234 framing attack (42 bytes: amount 1 → vault 264) | `/234` |
 
 ## Honest limits
 
