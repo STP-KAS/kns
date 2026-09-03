@@ -1,0 +1,36 @@
+{{template "header" .}}
+<main>
+  <div class="kicker">silverscript#234 · concrete · closed unmerged</div>
+  <h1>Same 42 bytes. Two amounts.</h1>
+  <p class="lede">A vault reads a token input’s <span class="mono">amount</span> at compile-time offsets. Kaspa allows more than one legal push header for the same payload. The attacker keeps <strong>length, template hash, and P2SH</strong> and still slides every field. <a href="https://github.com/kaspanet/silverscript/pull/234">PR 234</a> (supertypo, 29–30 Aug 2026) proposed pinning headers. It was <strong>closed, not merged</strong>. v1-rc1 does not include the guard.</p>
+
+  <h2>Token state the vault thinks it is reading</h2>
+  <pre>struct TokenState {
+    int amount;       // 8-byte payload
+    byte[32] owner;
+}</pre>
+
+  <h2>Canonical packing — 42 bytes</h2>
+  <pre>08  &lt;8 bytes: amount&gt;     20  &lt;32 bytes: owner&gt;
+└── 9 bytes ──────────┘   └── 33 bytes ─────────┘
+vault reads amount at bytes 1..9</pre>
+
+  <h2>Hostile packing — still 42 bytes, same template</h2>
+  <pre>4c 08  &lt;8 bytes&gt;          1f  &lt;31 bytes: owner&gt;
+└── 10 bytes ──────┘      └── 32 bytes ────────┘
+10 + 32 = 42. Hash matches. P2SH matches.
+vault still reads 1..9 and now gets: 08 + 7 attacker bytes
+real collateral = 1.  vault thinks ~2^59.</pre>
+
+  <h2>What this stack does</h2>
+  <table>
+    <tr><th>Contract</th><th>Foreign read?</th><th></th></tr>
+    <tr><td>KasName.sil</td><td>no</td><td>own validateOutputState</td></tr>
+    <tr><td>WorkCredit.sil</td><td>no</td><td>own mint / consume / transfer</td></tr>
+    <tr><td>KaChatPayTimeout.sil</td><td>no</td><td>sigs + time</td></tr>
+    <tr><td>KasInvoice.sil</td><td>no</td><td>KAS due + reserved micro in ctor</td></tr>
+    <tr><td>a till that readInputState a kUSD UTXO</td><td>would be yes</td><td><strong>blocked</strong> until a merged framing pin</td></tr>
+  </table>
+  <p class="lede">A test walks every <span class="mono">.sil</span> in this repo and fails if it contains <span class="mono">readInputState</span>. Recompiling with current silverc does not close the hole. JSON: <a href="/api/v1/framing">/api/v1/framing</a>. Rule: <a href="/honest">/honest</a>.</p>
+</main>
+{{template "footer" .}}

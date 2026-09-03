@@ -1,0 +1,19 @@
+pragma silverscript ^0.1.0;
+
+// FORBIDDEN — do not compile. Do not deploy. Illustration of silverscript#234.
+// A vault that readInputState()s a token the attacker can genesis.
+// On v1-rc1 the attacker reframes pushes (same 42 bytes, same template hash)
+// and the vault lends against an amount that is not in the UTXO.
+//
+// House rule: conventions/no-foreign-state.md
+// This file exists so the attack is a file you can open, not a slogan.
+
+contract ForbiddenForeignTokenVault(pubkey lender) {
+    // Imagined API — not compiled. If this ever type-checks on a future silverc
+    // that still lacks framing pins, it is still forbidden here.
+    //
+    // entry lend(int wanted) {
+    //     TokenState t = readInputState(1); // FOREIGN
+    //     require(t.amount >= wanted);      // attacker slides this field
+    // }
+}
