@@ -1,10 +1,10 @@
-# KNS — Web 4.0 names on Kaspa
+# KNS — Web4.0 names on Kaspa
 
 **project delusional** · [@StppStp](https://x.com/StppStp)
 
 Part of [STP-KAS/project-delusional](https://github.com/STP-KAS/project-delusional). Sisters: [gramlane](https://github.com/STP-KAS/gramlane) (`:8081`), [kaspa-till](https://github.com/STP-KAS/kaspa-till) (`:8082`).
 
-A `.kas` name for humans and agents. Live data is the official KNS indexer. Covenant uniqueness is **not** consensus. Web 4.0 here means readable, discoverable, callable, payable — not a Kaspa hard fork.
+A `.kas` name for humans and agents. Live data is the official KNS indexer. Covenant uniqueness is **not** consensus. Web4.0 here means readable, discoverable, callable, payable.
 
 This site never DMs you. We never ask for a seed.
 

@@ -1,5 +1,5 @@
 // Package web4 builds agent discovery documents from a KNS name.
-// Web 4.0 here = readable, discoverable, callable, payable (Cloudflare 2026).
+// Web4.0 here = readable, discoverable, callable, payable (Cloudflare 2026).
 // Crypto-native shorthand: Web3 + agents (x402, ERC-8004, MCP, A2A).
 // Kaspa has no ERC-8004 registry and no USDC x402 rail. These files are
 // the same *shape* so agents can consume them; payments are kaspa: URIs.
