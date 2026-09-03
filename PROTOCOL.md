@@ -42,6 +42,8 @@ This repo compiles:
 
 Language is `entry` + `validateOutputState`, not the old `#[covenant.singleton]` sketches. RC is not the same as a `v1` tag. README still says experimental / prefer testnet-10 until stable v1.
 
+**House rule:** do not `readInputState` a foreign covenant on v1-rc1. Framing of foreign state is not pinned ([silverscript#234](https://github.com/kaspanet/silverscript/pull/234), closed unmerged). Own-UTXO `validateOutputState` only. See `conventions/no-foreign-state.md`.
+
 ## Web 4.0 (what this actually is)
 
 Web 1 read, Web 2 write, Web 3 own, Web 4 **delegate**. Agents resolve a name, call it, pay it. Cloudflare 2026: readable, discoverable, callable, payable. Crypto shorthand: Web3 + agent (MCP, A2A, ERC-8004, x402).
