@@ -1,4 +1,4 @@
-# Draft convention: KNS records for Web 4.0 agents
+# Draft convention: KNS records for Web4.0 agents
 
 Status: idea for a future KCC. Not submitted to kaspanet/kccs.
 

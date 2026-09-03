@@ -29,7 +29,7 @@ func origin(r *http.Request) string {
 }
 
 func (s *Server) web4Page(w http.ResponseWriter, r *http.Request) {
-	s.render(w, "web4.html", page{Title: "Web 4.0 · KNS", Active: "web4", Eras: era.All()})
+	s.render(w, "web4.html", page{Title: "Web4.0 · KNS", Active: "web4", Eras: era.All()})
 }
 
 func (s *Server) agentJSON(w http.ResponseWriter, r *http.Request) {

@@ -1,4 +1,4 @@
-# KNS Web 4.0
+# KNS Web4.0
 Contact: https://github.com/kaspanet/silverscript
 MCP: /mcp
 Agent-card: /agent/{name}.json

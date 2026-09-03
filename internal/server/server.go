@@ -216,7 +216,7 @@ func (s *Server) home(w http.ResponseWriter, r *http.Request) {
 		http.NotFound(w, r)
 		return
 	}
-	s.render(w, "home.html", page{Title: "KNS — Web 4.0 names on Kaspa", Active: "home", Eras: era.All()})
+	s.render(w, "home.html", page{Title: "KNS — Web4.0 names on Kaspa", Active: "home", Eras: era.All()})
 }
 
 func (s *Server) lookupPage(w http.ResponseWriter, q, tmpl, title, active string) {
@@ -374,8 +374,8 @@ func (s *Server) apiPlan(w http.ResponseWriter, r *http.Request) {
 
 func (s *Server) llms(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text/plain; charset=utf-8")
-	_, _ = w.Write([]byte(`# KNS Web 4.0
-Web 4.0 = agents as users of a name (read, discover, call, pay). Not a Kaspa fork.
+	_, _ = w.Write([]byte(`# KNS Web4.0
+Web4.0 = agents as users of a name (read, discover, call, pay).
 Live: KNS indexer resolve.
 Agent card (ERC-8004 file shape, no Kaspa registry): GET /agent/{name}.json
 MCP: GET|POST /mcp

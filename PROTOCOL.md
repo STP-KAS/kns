@@ -44,7 +44,7 @@ Language is `entry` + `validateOutputState`, not the old `#[covenant.singleton]`
 
 **House rule:** do not `readInputState` a foreign covenant on v1-rc1. Framing of foreign state is not pinned ([silverscript#234](https://github.com/kaspanet/silverscript/pull/234), closed unmerged). Same 42-byte `TokenState`: amount 1, vault reads 264. Own-UTXO `validateOutputState` only. See `conventions/no-foreign-state.md` and `/234`.
 
-## Web 4.0 (what this actually is)
+## Web4.0
 
 Web 1 read, Web 2 write, Web 3 own, Web 4 **delegate**. Agents resolve a name, call it, pay it. Cloudflare 2026: readable, discoverable, callable, payable. Crypto shorthand: Web3 + agent (MCP, A2A, ERC-8004, x402).
 
@@ -67,26 +67,11 @@ dApps sequenced on Kaspa need predictable costs. A Toccata covenant cannot mint 
 
 This is the gas-token / fee-juice pattern, not USDC. Dollar apps use Igra Hyperlane USDC/USDT.
 
-## Protocol eras (Toccata / vProgs) — separate from Web 4.0
+## Protocol eras (Toccata / vProgs)
 
-There is no Kaspa 4.0 hard fork. Named forks: **Crescendo** (live), **Toccata** (live), **DAGKnight** (KIP-2 Proposed), a **2027 100 BPS** target with no spec. vProgs: no public testnet.
+Named forks: **Crescendo** (live), **Toccata** (live), **DAGKnight** (KIP-2 Proposed), a **2027 100 BPS** target with no spec. vProgs: no public testnet.
 
-KNS naming eras (identity model, not “Web 4.0”):
-
-| Era | Layer | Status |
-| --- | --- | --- |
-| 1 | Inscription + indexer | Live |
-| 2 | Toccata registrar / Name UTXO | Roadmap (consensus ready, app not deployed) |
-| 3 | Based ZK name set, lane `KNS1` | Research + local `/sim` |
-| 4 | vProgs composition + DAGKnight ordering | Research socket |
-
-`kas://name.kas`, `did:kas:name.kas`, and lane `KNS1` are conventions of this repo.
-
-## KNS 4.0 (superseded product label)
-
-There is no Kaspa 4.0 hard fork. Named forks: **Crescendo** (live), **Toccata** (live), **DAGKnight** (KIP-2 Proposed), a **2027 100 BPS** target with no spec. vProgs: no public testnet.
-
-KNS 4.0 means the naming stack is specified across four eras so identity does not have to be redesigned at each fork:
+KNS naming eras:
 
 | Era | Layer | Status |
 | --- | --- | --- |

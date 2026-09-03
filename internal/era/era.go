@@ -2,9 +2,8 @@ package era
 
 import "kns/internal/protocol"
 
-// KNS 4.0 is a product version, not a Kaspa hard fork.
-// Kaspa named forks: Crescendo (live), Toccata (live), DAGKnight (KIP-2, not mainnet),
-// then a 2027 100 BPS target. vProgs have no testnet. Do not call DAGKnight "4.0".
+// Naming eras for this stack. Kaspa named forks: Crescendo (live), Toccata (live),
+// DAGKnight (KIP-2, not mainnet), then a 2027 100 BPS target. vProgs have no testnet.
 
 type ID int
 
