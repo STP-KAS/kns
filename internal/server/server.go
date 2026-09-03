@@ -116,6 +116,7 @@ func (s *Server) Handler() http.Handler {
 	mux.HandleFunc("/safety", s.safetyPage)
 	mux.HandleFunc("/idea", s.ideaPage)
 	mux.HandleFunc("/explain", s.ideaPage)
+	mux.HandleFunc("/why", s.whyPage)
 	mux.HandleFunc("/feedback", s.feedbackPage)
 	mux.HandleFunc("/api/v1/feedback", s.apiFeedback)
 	mux.HandleFunc("/api/v1/wallets", func(w http.ResponseWriter, r *http.Request) {
