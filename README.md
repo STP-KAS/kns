@@ -31,6 +31,8 @@ If the browser says “refused to connect”, the `.exe` is not running. Run the
 
 | What | Where |
 | --- | --- |
+| **Idea** (what this URL is) | `/idea` |
+| **Why** (plants, agents, boring bills — not tokens) | `/why` |
 | Resolve a name or `kaspa:` address | `/app` |
 | Profile + pay URI | `/name/kns.kas` |
 | Generated site / JSON agent view | `/site/kns.kas` |
