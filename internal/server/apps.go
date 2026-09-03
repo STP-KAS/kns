@@ -29,6 +29,10 @@ func (s *Server) whyPage(w http.ResponseWriter, r *http.Request) {
 	s.render(w, "why.html", page{Title: "Why · KNS", Active: "why"})
 }
 
+func (s *Server) framingPage(w http.ResponseWriter, r *http.Request) {
+	s.render(w, "framing.html", page{Title: "silverscript#234 · KNS", Active: "silverc"})
+}
+
 func (s *Server) feedbackPage(w http.ResponseWriter, r *http.Request) {
 	p := page{Title: "Feedback · KNS", Active: "feedback"}
 	if r.Method == http.MethodPost {

@@ -9,6 +9,7 @@ import (
 	"strings"
 
 	"kns/internal/era"
+	"kns/internal/framing"
 	"kns/internal/kachat"
 	"kns/internal/kaposts"
 	"kns/internal/kasranks"
@@ -117,6 +118,11 @@ func (s *Server) Handler() http.Handler {
 	mux.HandleFunc("/idea", s.ideaPage)
 	mux.HandleFunc("/explain", s.ideaPage)
 	mux.HandleFunc("/why", s.whyPage)
+	mux.HandleFunc("/234", s.framingPage)
+	mux.HandleFunc("/framing", s.framingPage)
+	mux.HandleFunc("/api/v1/framing", func(w http.ResponseWriter, r *http.Request) {
+		writeJSON(w, 200, map[string]any{"ok": true, "data": framing.Report()})
+	})
 	mux.HandleFunc("/feedback", s.feedbackPage)
 	mux.HandleFunc("/api/v1/feedback", s.apiFeedback)
 	mux.HandleFunc("/api/v1/wallets", func(w http.ResponseWriter, r *http.Request) {
