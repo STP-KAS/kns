@@ -42,7 +42,7 @@ This repo compiles:
 
 Language is `entry` + `validateOutputState`, not the old `#[covenant.singleton]` sketches. RC is not the same as a `v1` tag. README still says experimental / prefer testnet-10 until stable v1.
 
-**House rule:** do not `readInputState` a foreign covenant on v1-rc1. Framing of foreign state is not pinned ([silverscript#234](https://github.com/kaspanet/silverscript/pull/234), closed unmerged). Own-UTXO `validateOutputState` only. See `conventions/no-foreign-state.md`.
+**House rule:** do not `readInputState` a foreign covenant on v1-rc1. Framing of foreign state is not pinned ([silverscript#234](https://github.com/kaspanet/silverscript/pull/234), closed unmerged). Same 42-byte `TokenState`: amount 1, vault reads 264. Own-UTXO `validateOutputState` only. See `conventions/no-foreign-state.md` and `/234`.
 
 ## Web 4.0 (what this actually is)
 

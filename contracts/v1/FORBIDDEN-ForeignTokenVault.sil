@@ -4,6 +4,7 @@ pragma silverscript ^0.1.0;
 // A vault that readInputState()s a token the attacker can genesis.
 // On v1-rc1 the attacker reframes pushes (same 42 bytes, same template hash)
 // and the vault lends against an amount that is not in the UTXO.
+// Worked: amount 1 → vault 264. See internal/framing and /234.
 //
 // House rule: conventions/no-foreign-state.md
 // This file exists so the attack is a file you can open, not a slogan.

@@ -4,6 +4,14 @@ Status: project delusional rule. Not a KCC. Not consensus.
 
 Silverscript v1-rc1 can decode another input's state (`readInputState`, `readInputStateWithTemplate`) at compile-time byte offsets. Kaspa's engine accepts more than one push encoding for the same bytes. A hostile UTXO can keep the same total length and the same template hash / P2SH and still **slide field reads** (fake token amounts, fake owners).
 
+Worked numbers (package `internal/framing`, page `/234`):
+
+- `TokenState { int amount; byte[32] owner }` is 42 bytes either way.
+- Canonical `08 <8 LE amount=1> 20 <32 owner>` — vault window `[1:9]` reads **1**.
+- Hostile `4c 08 <8 LE amount=1> 1f <31 owner>` — still 42 bytes — vault window reads **264** (`0x108`).
+- The PR's "~2^59" is exact as **2^59+8** when the real amount is **2^51** (the slid low byte is always the PUSHDATA1 length `08`).
+- The pin in the closed PR would reject the hostile blob (`header at 0: got 4c want 08`). v1-rc1 does not emit it.
+
 Documented in [kaspanet/silverscript#234](https://github.com/kaspanet/silverscript/pull/234) (supertypo, 29–30 Aug 2026). **Closed, not merged.** v1-rc1 does not include the guard.
 
 ## Rule

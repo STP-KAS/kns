@@ -57,6 +57,7 @@ type page struct {
 	KaChatDocs string
 	Quote      *workcredit.Quote
 	Wallets    []wallets.Wallet
+	Framing    *framing.View
 }
 
 func New(addr string, res *resolver.Resolver, set *nameset.Set) (*Server, error) {
@@ -121,13 +122,22 @@ func (s *Server) Handler() http.Handler {
 	mux.HandleFunc("/234", s.framingPage)
 	mux.HandleFunc("/framing", s.framingPage)
 	mux.HandleFunc("/api/v1/framing", func(w http.ResponseWriter, r *http.Request) {
-		writeJSON(w, 200, map[string]any{"ok": true, "data": framing.Report()})
+		v := framing.Demo()
+		if hx := strings.TrimSpace(r.URL.Query().Get("hex")); hx != "" {
+			got, err := framing.DecodeHex(hx)
+			if err != nil {
+				writeJSON(w, 400, map[string]any{"ok": false, "error": err.Error()})
+				return
+			}
+			v.Custom = &got
+		}
+		writeJSON(w, 200, map[string]any{"ok": true, "data": v, "numbers": framing.Report()["numbers"]})
 	})
 	mux.HandleFunc("/feedback", s.feedbackPage)
 	mux.HandleFunc("/api/v1/feedback", s.apiFeedback)
 	mux.HandleFunc("/api/v1/wallets", func(w http.ResponseWriter, r *http.Request) {
 		writeJSON(w, 200, map[string]any{
-			"ok": true,
+			"ok":     true,
 			"inject": []string{"kasware", "kastle"},
 			"ledger": "https://kasvault.io",
 			"source": "https://wiki.kaspa.org/wallet",
@@ -172,13 +182,13 @@ func (s *Server) Handler() http.Handler {
 	mux.HandleFunc("/llms.txt", s.llms)
 	mux.HandleFunc("/api/health", func(w http.ResponseWriter, r *http.Request) {
 		writeJSON(w, 200, map[string]any{
-			"ok":       true,
-			"product":  "kns-web4",
-			"web4":     "readable-discoverable-callable-payable",
-			"kns":      "inscription-indexer",
-			"toccata":  "live-consensus-not-this-app",
-			"x402":     "kaspa-native-402-not-usdc",
-			"erc8004":  "card-shape-only-no-registry",
+			"ok":           true,
+			"product":      "kns-web4",
+			"web4":         "readable-discoverable-callable-payable",
+			"kns":          "inscription-indexer",
+			"toccata":      "live-consensus-not-this-app",
+			"x402":         "kaspa-native-402-not-usdc",
+			"erc8004":      "card-shape-only-no-registry",
 			"overlays":     false,
 			"simRoot":      s.Set.Root(),
 			"workCredits":  "gram-voucher-not-usd",
