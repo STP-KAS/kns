@@ -1,5 +1,7 @@
 # KNS — Web4.0 names on Kaspa
 
+**Implementer kit (inscriptions + proven covenant txs):** [STP-KAS/kns-spec](https://github.com/STP-KAS/kns-spec). This repo is the Web4 demo.
+
 **project delusional** · [@StppStp](https://x.com/StppStp)
 
 Part of [STP-KAS/project-delusional](https://github.com/STP-KAS/project-delusional). Sisters: [gramlane](https://github.com/STP-KAS/gramlane) (`:8081`), [kaspa-till](https://github.com/STP-KAS/kaspa-till) (`:8082`).
