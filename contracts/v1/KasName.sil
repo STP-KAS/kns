@@ -1,7 +1,7 @@
 pragma silverscript ^0.1.0;
 
-// Compiled with official silverc v1-rc1
-// https://github.com/kaspanet/silverscript/releases/tag/v1-rc1
+// Compiled with official silverc v1.0.0
+// https://github.com/kaspanet/silverscript/releases/tag/v1.0.0
 // Ori Newman @OriNewman 30 Aug 2026. RC, not yet "v1 mainnet" unless the week elapsed cleanly.
 //
 // Uniqueness of the *label* is still not consensus. This UTXO carries owner +

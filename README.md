@@ -50,20 +50,20 @@ If the browser says “refused to connect”, the `.exe` is not running. Run the
 | Kassword pointer | `/kassword` |
 | Ocean rank from live balance | `/ranks?q=kns.kas` |
 | KCC drafts | `/kcc` |
-| Silverscript v1-rc1 artifacts | `/silverc` |
+| Silverscript v1.0.0 artifacts | `/silverc` |
 | #234 framing attack (42 bytes: amount 1 → vault 264) | `/234` |
 
 ## Honest limits
 
 - Uniqueness today: KNS indexer FCFS.
-- Silverscript: official `v1-rc1` (`@OriNewman`, kaspanet). RC ≠ tagged `v1`.
+- Silverscript: official **`v1.0.0`** (`@OriNewman` / someone235, 9 Sep 2026, `3ed9733`).
 - KaChat encryption, Kassword ciphertext, and KASRANKS NFTs stay in those apps.
 - Agent cards are synthesized. There is no Kaspa ERC-8004 registry.
 - Work Credits are prepaid KIP-21 grams. Not a stablecoin. No L2.
 - AgenC/Tetsuo is a Solana marketplace. Not wired.
-- **No foreign `readInputState`** on v1-rc1 ([silverscript#234](https://github.com/kaspanet/silverscript/pull/234) closed unmerged). Own UTXO only. `conventions/no-foreign-state.md`.
+- **No foreign `readInputState`** on v1.0.0 ([silverscript#234](https://github.com/kaspanet/silverscript/pull/234) closed unmerged). Own UTXO only. `conventions/no-foreign-state.md`.
 
 ## Trusted tools used
 
-- `C:\Users\Remco\silverscript` — clone of `github.com/kaspanet/silverscript` @ `v1-rc1` (`c7d17a1`)
-- `C:\Users\Remco\tools\silverc\silverc.exe` — GitHub release zip, SHA256 `fbf75851e8d1c97e1982e72cb26e8b8f6417fa5a6ed99d58693d6314890619c3`
+- `C:\Users\Remco\silverscript` — clone of `github.com/kaspanet/silverscript` @ **`v1.0.0`** (`3ed9733`)
+- `C:\Users\Remco\tools\silverc-v1\bin\silverc.exe` — GitHub release zip SHA256 `3e0d660c15a9e7ac90f3960da24d348b076b1891481bfe758db18accc8a102e1`

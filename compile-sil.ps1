@@ -1,12 +1,14 @@
 $ErrorActionPreference = "Stop"
-$silverc = "C:\Users\Remco\tools\silverc\silverc.exe"
+$silverc = "C:\Users\Remco\tools\silverc-v1\bin\silverc.exe"
+if (-not (Test-Path $silverc)) { $silverc = "C:\Users\Remco\tools\silverc\silverc.exe" }
 if (-not (Test-Path $silverc)) { throw "missing official silverc.exe" }
 $root = Split-Path -Parent $MyInvocation.MyCommand.Path
 $hits = Get-ChildItem "$root\contracts" -Recurse -Filter *.sil |
   Where-Object { $_.Name -notmatch 'FORBIDDEN' } |
-  Select-String -Pattern 'readInputState'
+  Select-String -Pattern 'readInputState' |
+  Where-Object { $_.Line -notmatch '^\s*//' }
 if ($hits) {
-  throw "readInputState is forbidden on v1-rc1 (silverscript#234): $($hits.Path -join ', ')"
+  throw "readInputState is forbidden (silverscript#234 unmerged on v1.0.0): $($hits.Path -join ', ')"
 }
 & $silverc "$root\contracts\v1\KasName.sil" --constructor-args "$root\contracts\v1\ctor-KasName.json" -o "$root\contracts\v1\KasName.json"
 & $silverc "$root\contracts\v1\KaChatPayTimeout.sil" --constructor-args "$root\contracts\v1\ctor-KaChatPayTimeout.json" -o "$root\contracts\v1\KaChatPayTimeout.json"

@@ -30,19 +30,19 @@ POST /api/v1/domain/primary-name
 
 50,000+ inscriptions (KNS, Jul 2026).
 
-## Silverscript v1-rc1 (Ori Newman, 30 Aug 2026)
+## Silverscript v1.0.0 (Ori Newman, 9 Sep 2026)
 
-Official: https://github.com/kaspanet/silverscript/releases/tag/v1-rc1  
-Commit `c7d17a1`, verified GitHub signature. Windows `silverc.exe` SHA256 `fbf75851e8d1c97e1982e72cb26e8b8f6417fa5a6ed99d58693d6314890619c3`.
+Official: https://github.com/kaspanet/silverscript/releases/tag/v1.0.0  
+Commit `3ed9733`, verified GitHub signature. SemVer starts here. Windows zip SHA256 `3e0d660c15a9e7ac90f3960da24d348b076b1891481bfe758db18accc8a102e1`. Language pragma in official examples is still `^0.1.0`.
 
 This repo compiles:
 
-- `contracts/v1/KasName.sil` → `KasName.json` (template_hash `e7f981d9…32b79f`)
+- `contracts/v1/KasName.sil` → `KasName.json` (template_hash `e7f981d9…32b79f` — **unchanged** from the v1-rc1 build of this source)
 - `contracts/v1/KaChatPayTimeout.sil` → `KaChatPayTimeout.json`
 
-Language is `entry` + `validateOutputState`, not the old `#[covenant.singleton]` sketches. RC is not the same as a `v1` tag. README still says experimental / prefer testnet-10 until stable v1.
+Language is `entry` + `validateOutputState`, not the old `#[covenant.singleton]` sketches.
 
-**House rule:** do not `readInputState` a foreign covenant on v1-rc1. Framing of foreign state is not pinned ([silverscript#234](https://github.com/kaspanet/silverscript/pull/234), closed unmerged). Same 42-byte `TokenState`: amount 1, vault reads 264. Own-UTXO `validateOutputState` only. See `conventions/no-foreign-state.md` and `/234`.
+**House rule:** do not `readInputState` a foreign covenant. Framing of foreign state is not pinned ([silverscript#234](https://github.com/kaspanet/silverscript/pull/234), closed unmerged on v1.0.0). Same 42-byte `TokenState`: amount 1, vault reads 264. Own-UTXO `validateOutputState` only. See `conventions/no-foreign-state.md` and `/234`. `#243` (no compute-budget in the artifact) is still open.
 
 ## Web4.0
 
