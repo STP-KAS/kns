@@ -2,10 +2,20 @@ pragma silverscript ^0.1.0;
 
 // Compiled with official silverc v1.0.0
 // https://github.com/kaspanet/silverscript/releases/tag/v1.0.0
-// Ori Newman @OriNewman 30 Aug 2026. RC, not yet "v1 mainnet" unless the week elapsed cleanly.
+// Ori Newman @OriNewman 9 Sep 2026, commit 3ed9733.
 //
-// Uniqueness of the *label* is still not consensus. This UTXO carries owner +
-// labelHash + records. A registrar must mint it. See PROTOCOL.md.
+// Single-contract Silverscript (Sutton: Argent is the multi-actor layer above
+// this, and is not release-ready). KCC-01 dispatch tags come from silverc.
+// Owner is a schnorr pubkey (KCC-02 scheme 0x00), not a KCC-20 token.
+//
+// Uniqueness of the *label* is still not consensus. Constructor takes
+// SHA-256("kns/v1/" || ascii-lowercase-label). A registrar must mint.
+// Do not readInputState a foreign covenant (silverscript#234, unmerged;
+// Sutton: provenance assumptions, not a merged framing pin).
+//
+// validateOutputState does not constrain amount (v1 tutorial). Continue the
+// name at the same sompi so storage-mass KAS is not stripped; pay miner fees
+// from a sibling P2PK input (CashScript / KCC borrowed-receive pattern).
 
 contract KasName(pubkey initOwner, byte[32] initLabelHash) {
     pubkey owner = initOwner;
@@ -13,33 +23,29 @@ contract KasName(pubkey initOwner, byte[32] initLabelHash) {
     byte[32] kasPkh = byte[32](0x0000000000000000000000000000000000000000000000000000000000000000);
     byte[32] vaultCommit = byte[32](0x0000000000000000000000000000000000000000000000000000000000000000);
 
+    function continueAtValue(pubkey nextOwner, byte[32] nextKas, byte[32] nextVault) {
+        require(tx.outputs.length >= 1);
+        require(tx.outputs[0].value == tx.inputs[this.activeInputIndex].value);
+        validateOutputState(0, State {
+            owner: nextOwner,
+            labelHash: labelHash,
+            kasPkh: nextKas,
+            vaultCommit: nextVault
+        });
+    }
+
     entry setKas(sig s, byte[32] pkh) {
         require(checkSig(s, owner));
-        validateOutputState(0, State {
-            owner: owner,
-            labelHash: labelHash,
-            kasPkh: pkh,
-            vaultCommit: vaultCommit
-        });
+        continueAtValue(owner, pkh, vaultCommit);
     }
 
     entry bindVault(sig s, byte[32] commit) {
         require(checkSig(s, owner));
-        validateOutputState(0, State {
-            owner: owner,
-            labelHash: labelHash,
-            kasPkh: kasPkh,
-            vaultCommit: commit
-        });
+        continueAtValue(owner, kasPkh, commit);
     }
 
     entry transfer(sig s, pubkey nextOwner) {
         require(checkSig(s, owner));
-        validateOutputState(0, State {
-            owner: nextOwner,
-            labelHash: labelHash,
-            kasPkh: kasPkh,
-            vaultCommit: vaultCommit
-        });
+        continueAtValue(nextOwner, kasPkh, vaultCommit);
     }
 }
