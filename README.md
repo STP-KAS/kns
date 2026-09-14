@@ -62,6 +62,7 @@ If the browser says “refused to connect”, the `.exe` is not running. Run the
 - Work Credits are prepaid KIP-21 grams. Not a stablecoin. No L2.
 - AgenC/Tetsuo is a Solana marketplace. Not wired.
 - **No foreign `readInputState`** on v1.0.0 ([silverscript#234](https://github.com/kaspanet/silverscript/pull/234) closed unmerged). Own UTXO only. `conventions/no-foreign-state.md`.
+- **`go test` red X:** `TestContractSourcesDoNotReadForeignState` greps the **comment** in `KasName.sil` (`// Do not readInputState…`). The function is not called. House rule still stands. Fix the linter, not the covenant. [tn10-hard-test](https://github.com/STP-KAS/tn10-hard-test).
 
 ## Trusted tools used
 
