@@ -72,3 +72,12 @@ If the browser says “refused to connect”, the `.exe` is not running. Run the
 
 - `C:\Users\<user>\silverscript` — clone of `github.com/kaspanet/silverscript` @ **`v1.0.0`** (`3ed9733`)
 - `C:\Users\<user>\tools\silverc-v1\bin\silverc.exe` — GitHub release zip SHA256 `3e0d660c15a9e7ac90f3960da24d348b076b1891481bfe758db18accc8a102e1`
+
+---
+
+> **Standard disclaimer.** This GitHub, not the topic above.
+>
+> Intentions are good; thought process is questionable. STP remains delusional. Si vis pacem, para bellum.
+>
+> Intern at https://sixpack.wtf/  
+> X: https://x.com/StppStp · GitHub: https://github.com/STP-KAS
