@@ -204,7 +204,7 @@ func (s *Server) apiCreditsQuote(w http.ResponseWriter, r *http.Request) {
 		"local":  true,
 		"deploy": false,
 		"data":   inv,
-		"map":    "C:\\Users\\<user>\\Documents\\kaspa\\superapp\\WORK-CREDITS.md",
+		"map":    "%USERPROFILE%\\Documents\\kaspa\\superapp\\WORK-CREDITS.md",
 	})
 }
 

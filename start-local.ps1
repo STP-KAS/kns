@@ -4,9 +4,9 @@ $ErrorActionPreference = "Stop"
 Get-Process kns,gramlane,kastill -ErrorAction SilentlyContinue | Stop-Process -Force
 Start-Sleep -Milliseconds 400
 
-Start-Process -FilePath "C:\Users\<user>\kns\kns.exe" -WorkingDirectory "C:\Users\<user>\kns" -WindowStyle Minimized
-Start-Process -FilePath "C:\Users\<user>\Documents\kaspa\superapp\gramlane.exe" -WorkingDirectory "C:\Users\<user>\Documents\kaspa\superapp" -WindowStyle Minimized
-Start-Process -FilePath "C:\Users\<user>\Documents\kaspa\superappstablesalternative\kastill.exe" -WorkingDirectory "C:\Users\<user>\Documents\kaspa\superappstablesalternative" -WindowStyle Minimized
+Start-Process -FilePath "$env:USERPROFILE\kns\kns.exe" -WorkingDirectory "$env:USERPROFILE\kns" -WindowStyle Minimized
+Start-Process -FilePath "$env:USERPROFILE\Documents\kaspa\superapp\gramlane.exe" -WorkingDirectory "$env:USERPROFILE\Documents\kaspa\superapp" -WindowStyle Minimized
+Start-Process -FilePath "$env:USERPROFILE\Documents\kaspa\superappstablesalternative\kastill.exe" -WorkingDirectory "$env:USERPROFILE\Documents\kaspa\superappstablesalternative" -WindowStyle Minimized
 Start-Sleep 2
 
 function Ping($url, $name) {

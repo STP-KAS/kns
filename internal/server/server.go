@@ -382,7 +382,7 @@ MCP: GET|POST /mcp
 Kaspa HTTP 402 (not Coinbase x402): GET /api/v1/call/{name}
 Work credits (grams, not USD): GET /credits  GET /api/v1/credits/quote?grams=1000000
 JSON site: GET /site/{name}?format=json
-Superapp map: C:\\Users\\<user>\\Documents\\kaspa\\superapp
+Superapp map: %USERPROFILE%\\Documents\\kaspa\\superapp
 `))
 }
 

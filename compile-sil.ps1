@@ -1,6 +1,6 @@
 $ErrorActionPreference = "Stop"
-$silverc = "C:\Users\<user>\tools\silverc-v1\bin\silverc.exe"
-if (-not (Test-Path $silverc)) { $silverc = "C:\Users\<user>\tools\silverc\silverc.exe" }
+$silverc = "$env:USERPROFILE\tools\silverc-v1\bin\silverc.exe"
+if (-not (Test-Path $silverc)) { $silverc = "$env:USERPROFILE\tools\silverc\silverc.exe" }
 if (-not (Test-Path $silverc)) { throw "missing official silverc.exe" }
 $root = Split-Path -Parent $MyInvocation.MyCommand.Path
 $hits = Get-ChildItem "$root\contracts" -Recurse -Filter *.sil |
